@@ -19,7 +19,7 @@ import java.util.Set;
 @Setter @Getter @Builder @AllArgsConstructor @NoArgsConstructor
 public class Categoria {
     @Id
-    @Column(name = "nombre", length = 40)
+    @Column(name = "pk_nombre", length = 40)
     private String nombre;
 
     @OneToMany(mappedBy = "categoria")

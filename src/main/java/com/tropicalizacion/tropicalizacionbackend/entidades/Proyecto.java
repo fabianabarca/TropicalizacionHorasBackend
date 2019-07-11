@@ -20,10 +20,10 @@ import java.util.Set;
 @Setter @Getter @Builder @AllArgsConstructor @NoArgsConstructor
 public class Proyecto {
     @Id
-    @Column(name = "nombre", length = 100)
+    @Column(name = "pk_nombre", length = 100)
     private String nombre;
 
-    @Column(name = "descripcion", columnDefinition = "NVARCHAR(MAX)")
+    @Column(name = "descripcion", columnDefinition = "MEDIUMTEXT")
     private String descripcion;
 
     @ManyToMany(mappedBy = "proyectos")

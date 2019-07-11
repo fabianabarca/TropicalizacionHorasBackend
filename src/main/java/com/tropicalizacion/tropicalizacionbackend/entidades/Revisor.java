@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -30,6 +31,7 @@ public class Revisor {
     private boolean esCoordinador;
 
     @OneToOne
+    @MapsId
     @JoinColumn(name = "pk_correo_usuario", referencedColumnName = "pk_correo")
     private Usuario usuario;
 

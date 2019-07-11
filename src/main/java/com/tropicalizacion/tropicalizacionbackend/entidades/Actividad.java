@@ -32,15 +32,15 @@ public class Actividad {
     @NotNull
     private Time hora;
 
-    @Column(name = "estado", columnDefinition = "ENUM('Pendiente, Aprobada, Rechazada')", length = 10)
+    @Column(name = "estado", columnDefinition = "ENUM('Pendiente', 'Aprobada', 'Rechazada')", length = 10)
     @NotNull
     private String estado;
 
-    @Column(name = "detalles", columnDefinition = "NVARCHAR(MAX)")
+    @Column(name = "detalles", columnDefinition = "MEDIUMTEXT")
     @NotNull
     private String detalles;
 
-    @Column(name = "justificacion_rechazo", columnDefinition = "NVARCHAR(MAX)")
+    @Column(name = "justificacion_rechazo", columnDefinition = "MEDIUMTEXT")
     private String justificacionRechazo;
 
     @Column(name = "decision")
@@ -48,20 +48,21 @@ public class Actividad {
 
     @ManyToOne
     @MapsId("correoEstudiante")
-    @JoinColumn(name = "correo_estudiante", referencedColumnName = "correo_usuario")
+    @JoinColumn(name = "fk_correo_estudiante", referencedColumnName = "pk_correo_usuario")
     private Estudiante estudiante;
 
     @ManyToOne
-    @JoinColumn(name = "nombre_categoria", referencedColumnName = "nombre")
+    @JoinColumn(name = "fk_nombre_categoria", referencedColumnName = "pk_nombre")
     @NotNull
     private Categoria categoria;
 
     @ManyToOne
-    @JoinColumn(name = "nombre_proyecto", referencedColumnName = "nombre")
+    @JoinColumn(name = "fk_nombre_proyecto", referencedColumnName = "pk_nombre")
     @NotNull
     private Proyecto proyecto;
 
     @ManyToOne
-    @JoinColumn(name = "correo_revisor", referencedColumnName = "correo_usuario")
+    @JoinColumn(name = "fk_correo_revisor", referencedColumnName = "pk_correo_usuario")
     private Revisor revisor;
 }
+

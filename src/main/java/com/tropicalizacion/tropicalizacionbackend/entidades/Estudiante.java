@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -53,14 +54,15 @@ public class Estudiante {
     private int horasTotales;
 
     @OneToOne
+    @MapsId
     @JoinColumn(name = "pk_correo_usuario", referencedColumnName = "pk_correo")
     private Usuario usuario;
 
     @ManyToMany
     @JoinTable(
             name = "estudiante_participa_proyecto",
-            joinColumns = {@JoinColumn(name = "estudiante_correo")},
-            inverseJoinColumns = {@JoinColumn(name = "proyecto_nombre")}
+            joinColumns = {@JoinColumn(name = "fk_estudiante_correo")},
+            inverseJoinColumns = {@JoinColumn(name = "fk_proyecto_nombre")}
     )
     @NotNull
     private Set<Proyecto> proyectos = new HashSet<>();

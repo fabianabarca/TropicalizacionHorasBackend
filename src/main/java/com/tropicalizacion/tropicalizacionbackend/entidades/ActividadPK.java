@@ -10,14 +10,30 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 @Setter @Getter @Builder @AllArgsConstructor @NoArgsConstructor
 public class ActividadPK implements Serializable {
-    @Column(name = "correo_estudiante", length = 100)
+    @Column(name = "fk_correo_estudiante", length = 100)
     private String correoEstudiante;
 
     @Column(name = "id_generado")
     @GeneratedValue
     private int idGenerado;
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(correoEstudiante, idGenerado);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ActividadPK that = (ActividadPK) o;
+        return Objects.equals(correoEstudiante, that.correoEstudiante) &&
+                Objects.equals(idGenerado, that.idGenerado);
+    }
 }

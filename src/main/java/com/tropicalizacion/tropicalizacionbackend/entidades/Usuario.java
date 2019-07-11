@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -37,9 +39,9 @@ public class Usuario {
     @NotNull
     private String apellidos;
 
-    @OneToOne(mappedBy = "correoUsuario")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.ALL)
     private Estudiante estudiante;
 
-    @OneToOne(mappedBy = "correoUsuario")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.ALL)
     private Revisor revisor;
 }
