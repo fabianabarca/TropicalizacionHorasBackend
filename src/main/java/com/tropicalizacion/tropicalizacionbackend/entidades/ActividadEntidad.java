@@ -15,14 +15,13 @@ import javax.persistence.MapsId;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
-import java.sql.Time;
 
 @Entity
 @Table(name = "actividad")
 @Setter @Getter @Builder @AllArgsConstructor @NoArgsConstructor
-public class Actividad {
+public class ActividadEntidad {
     @EmbeddedId
-    private ActividadPK actividadPK;
+    private ActividadEntidadPK actividadEntidadPK;
 
     @Column(name = "fecha")
     @NotNull
@@ -49,20 +48,20 @@ public class Actividad {
     @ManyToOne
     @MapsId("correoEstudiante")
     @JoinColumn(name = "fk_correo_estudiante", referencedColumnName = "pk_correo_usuario")
-    private Estudiante estudiante;
+    private EstudianteEntidad estudiante;
 
     @ManyToOne
     @JoinColumn(name = "fk_nombre_categoria", referencedColumnName = "pk_nombre")
     @NotNull
-    private Categoria categoria;
+    private CategoriaEntidad categoria;
 
     @ManyToOne
     @JoinColumn(name = "fk_nombre_proyecto", referencedColumnName = "pk_nombre")
     @NotNull
-    private Proyecto proyecto;
+    private ProyectoEntidad proyecto;
 
     @ManyToOne
     @JoinColumn(name = "fk_correo_revisor", referencedColumnName = "pk_correo_usuario")
-    private Revisor revisor;
+    private RevisorEntidad revisor;
 }
 

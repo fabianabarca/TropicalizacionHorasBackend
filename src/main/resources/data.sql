@@ -24,9 +24,9 @@ INSERT INTO categoria (pk_nombre) VALUES
 ('Gira');
 
 INSERT INTO proyecto (pk_nombre, descripcion) VALUES
-('Mapa de Osa', 'Proyecto para desarollar la aplicación del mapa de Osa'),
-('Ingreso a la U', 'Proyecto encargado de divulgar información sobre la UCR a comunidades de Osa'),
-('Factura electrónica', 'Proyecto encargado de informar a la comunidades de Osa sobre la factura electrónica'),
+('Mapa de Osa', 'ProyectoEntidad para desarollar la aplicación del mapa de Osa'),
+('Ingreso a la U', 'ProyectoEntidad encargado de divulgar información sobre la UCR a comunidades de Osa'),
+('Factura electrónica', 'ProyectoEntidad encargado de informar a la comunidades de Osa sobre la factura electrónica'),
 ('RRSS', 'Talleres de redes sociales para las comunidades y emprendimientos');
 
 INSERT INTO estudiante_participa_proyecto (fk_estudiante_correo, fk_proyecto_nombre) VALUES

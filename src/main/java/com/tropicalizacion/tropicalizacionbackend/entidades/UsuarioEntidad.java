@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "usuario")
 @Setter @Getter @Builder @AllArgsConstructor @NoArgsConstructor
-public class Usuario {
+public class UsuarioEntidad {
     @Id
     @Column(length = 100, name = "pk_correo")
     private String correo;
@@ -40,8 +40,8 @@ public class Usuario {
     private String apellidos;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.ALL)
-    private Estudiante estudiante;
+    private EstudianteEntidad estudiante;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.ALL)
-    private Revisor revisor;
+    private RevisorEntidad revisor;
 }

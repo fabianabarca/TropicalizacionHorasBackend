@@ -21,7 +21,7 @@ import java.util.Set;
 @Entity
 @Table(name = "revisor")
 @Setter @Getter @Builder @AllArgsConstructor @NoArgsConstructor
-public class Revisor {
+public class RevisorEntidad {
     @Id
     @Column(name = "pk_correo_usuario", length = 100)
     private String correoUsuario;
@@ -33,8 +33,8 @@ public class Revisor {
     @OneToOne
     @MapsId
     @JoinColumn(name = "pk_correo_usuario", referencedColumnName = "pk_correo")
-    private Usuario usuario;
+    private UsuarioEntidad usuario;
 
     @OneToMany(mappedBy = "revisor")
-    private Set<Actividad> actividades = new HashSet<>();
+    private Set<ActividadEntidad> actividades = new HashSet<>();
 }

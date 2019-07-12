@@ -14,7 +14,7 @@ import java.util.Objects;
 
 @Embeddable
 @Setter @Getter @Builder @AllArgsConstructor @NoArgsConstructor
-public class ActividadPK implements Serializable {
+public class ActividadEntidadPK implements Serializable {
     @Column(name = "fk_correo_estudiante", length = 100)
     private String correoEstudiante;
 
@@ -32,7 +32,7 @@ public class ActividadPK implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ActividadPK that = (ActividadPK) o;
+        ActividadEntidadPK that = (ActividadEntidadPK) o;
         return Objects.equals(correoEstudiante, that.correoEstudiante) &&
                 Objects.equals(idGenerado, that.idGenerado);
     }

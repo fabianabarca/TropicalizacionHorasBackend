@@ -24,7 +24,7 @@ import java.util.Set;
 @Entity
 @Table(name = "estudiante")
 @Setter @Getter @Builder @NoArgsConstructor @AllArgsConstructor
-public class Estudiante {
+public class EstudianteEntidad {
     @Id
     @Column(name = "pk_correo_usuario", length = 100)
     private String correoUsuario;
@@ -56,7 +56,7 @@ public class Estudiante {
     @OneToOne
     @MapsId
     @JoinColumn(name = "pk_correo_usuario", referencedColumnName = "pk_correo")
-    private Usuario usuario;
+    private UsuarioEntidad usuario;
 
     @ManyToMany
     @JoinTable(
@@ -65,8 +65,8 @@ public class Estudiante {
             inverseJoinColumns = {@JoinColumn(name = "fk_proyecto_nombre")}
     )
     @NotNull
-    private Set<Proyecto> proyectos = new HashSet<>();
+    private Set<ProyectoEntidad> proyectos = new HashSet<>();
 
     @OneToMany(mappedBy = "estudiante")
-    private Set<Actividad> actividades = new HashSet<>();
+    private Set<ActividadEntidad> actividades = new HashSet<>();
 }
