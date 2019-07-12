@@ -1,12 +1,11 @@
 package com.tropicalizacion.tropicalizacionbackend.seguridad;
 
-import com.tropicalizacion.tropicalizacionbackend.entidades.UsuarioEntidad;
+import com.tropicalizacion.tropicalizacionbackend.entidades.bd.UsuarioEntidad;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**

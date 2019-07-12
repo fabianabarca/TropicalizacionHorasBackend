@@ -1,4 +1,4 @@
-package com.tropicalizacion.tropicalizacionbackend.entidades;
+package com.tropicalizacion.tropicalizacionbackend.entidades.bd;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.tropicalizacion.tropicalizacionbackend.seguridad;
 
-import com.tropicalizacion.tropicalizacionbackend.entidades.UsuarioEntidad;
+import com.tropicalizacion.tropicalizacionbackend.entidades.bd.UsuarioEntidad;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.UsuarioNoEncontradoExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.UsuariosRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;

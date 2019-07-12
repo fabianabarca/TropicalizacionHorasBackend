@@ -1,7 +1,7 @@
 package com.tropicalizacion.tropicalizacionbackend.seguridad.jwt;
 
-import com.tropicalizacion.tropicalizacionbackend.entidades.UsuarioEntidad;
-import com.tropicalizacion.tropicalizacionbackend.excepciones.InvalidJwtAuthenticationException;
+import com.tropicalizacion.tropicalizacionbackend.entidades.bd.UsuarioEntidad;
+import com.tropicalizacion.tropicalizacionbackend.excepciones.JwtInvalidoExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.seguridad.SecretServicio;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -20,7 +20,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Clase con lógica para crear, validar y procesar JWTs
@@ -110,13 +109,13 @@ public class JwtTokenProvider {
      * @param token token JWT
      * @return retorna true si es un token válido o false si no
      */
-    public boolean validateToken(String token) throws InvalidJwtAuthenticationException {
+    public boolean validateToken(String token) throws JwtInvalidoExcepcion {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretkey.getHS256SecretBytes()).parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
         }
         catch (JwtException | IllegalArgumentException e) {
-            throw new InvalidJwtAuthenticationException("Expired or invalid JWT token", HttpStatus.UNAUTHORIZED, System.currentTimeMillis());
+            throw new JwtInvalidoExcepcion("Expired or invalid JWT token", HttpStatus.UNAUTHORIZED, System.currentTimeMillis());
         }
     }
 

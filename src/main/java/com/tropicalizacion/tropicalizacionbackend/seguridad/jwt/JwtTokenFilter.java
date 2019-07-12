@@ -1,6 +1,6 @@
 package com.tropicalizacion.tropicalizacionbackend.seguridad.jwt;
 
-import com.tropicalizacion.tropicalizacionbackend.excepciones.InvalidJwtAuthenticationException;
+import com.tropicalizacion.tropicalizacionbackend.excepciones.JwtInvalidoExcepcion;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,7 +42,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(req, res);
         }
-        catch (InvalidJwtAuthenticationException e) {
+        catch (JwtInvalidoExcepcion e) {
             res.setStatus(HttpStatus.UNAUTHORIZED.value());
             res.getWriter().write(e.getMessage());
         }
