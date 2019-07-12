@@ -1,5 +1,6 @@
 package com.tropicalizacion.tropicalizacionbackend.seguridad.jwt;
 
+import com.tropicalizacion.tropicalizacionbackend.excepciones.InvalidJwtAuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

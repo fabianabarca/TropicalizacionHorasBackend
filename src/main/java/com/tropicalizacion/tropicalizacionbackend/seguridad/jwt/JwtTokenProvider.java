@@ -1,6 +1,7 @@
 package com.tropicalizacion.tropicalizacionbackend.seguridad.jwt;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.UsuarioEntidad;
+import com.tropicalizacion.tropicalizacionbackend.excepciones.InvalidJwtAuthenticationException;
 import com.tropicalizacion.tropicalizacionbackend.seguridad.SecretServicio;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
