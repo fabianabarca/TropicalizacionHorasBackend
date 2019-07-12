@@ -28,9 +28,9 @@ public class Actividad {
     @NotNull
     private Date fecha;
 
-    @Column(name = "hora")
+    @Column(name = "horas")
     @NotNull
-    private Time hora;
+    private int horas;
 
     @Column(name = "estado", columnDefinition = "ENUM('Pendiente', 'Aprobada', 'Rechazada')", length = 10)
     @NotNull
