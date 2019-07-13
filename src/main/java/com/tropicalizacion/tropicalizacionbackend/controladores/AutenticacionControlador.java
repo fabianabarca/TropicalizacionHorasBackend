@@ -23,9 +23,9 @@ import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
 
-@CrossOrigin(allowCredentials = "*")
+@CrossOrigin
 @RestController
-@RequestMapping("/autenticar")
+@RequestMapping(value = "/autenticar")
 public class AutenticacionControlador {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
@@ -48,7 +48,6 @@ public class AutenticacionControlador {
     @PostMapping("/sign-in")
     public ResponseEntity signIn(@Valid @RequestBody AutenticacionUsuario infoUsuario) throws MethodArgumentNotValidException {
         try {
-
             return ok(autenticacionServicio.autenticarUsuario(infoUsuario.getCorreoUsuario(), infoUsuario.getContrasenna()));
         } catch (MalasCredencialesExcepcion e) {
             throw new MalasCredencialesExcepcion("Correo o contraseña inválido", HttpStatus.UNAUTHORIZED, System.currentTimeMillis());
