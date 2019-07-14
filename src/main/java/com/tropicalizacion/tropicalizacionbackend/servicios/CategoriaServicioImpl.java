@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class CategoriaServicioImpl implements CategoriaServicio {
 
@@ -31,5 +33,12 @@ public class CategoriaServicioImpl implements CategoriaServicio {
 
     public Page<CategoriaEntidad> getCategorias(Integer pagina, Integer limite){
         return categoriasRepositorio.findAll(PageRequest.of(pagina, limite));
+    }
+
+    public ArrayList<String> getCategoriasNombre(Integer pagina, Integer limite){
+        Page<CategoriaEntidad> categorias =  categoriasRepositorio.findAll(PageRequest.of(pagina, limite));
+        ArrayList<String> categoriasNombre = new ArrayList<>();
+        categorias.forEach(categoria -> categoriasNombre.add(categoria.getNombre()));
+        return categoriasNombre;
     }
 }
