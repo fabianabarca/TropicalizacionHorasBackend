@@ -39,6 +39,10 @@ public class UsuarioEntidad {
     @NotNull
     private String apellidos;
 
+    @Column(name = "habilitado")
+    @NotNull
+    private Boolean habilitado;
+
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.ALL)
     private EstudianteEntidad estudiante;
 

@@ -1,11 +1,11 @@
-INSERT INTO usuario (pk_correo, apellidos, contrasenna, nombre, telefono) VALUES
-('estudiante1@estudiante.com', 'Araya Jimémenez', 'contrasenna', 'Juan', '88888888'),
-('estudiante2@estudiante.com', 'Zuñiga Barrantes', 'contrasenna', 'Arturo', '88888888'),
-('estudiante3@estudiante.com', 'Castro Fallas', 'contrasenna', 'David', '88888888'),
-('estudiante4@estudiante.com', 'Hidalgo López', 'contrasenna', 'Francisco', '88888888'),
-('teo@revisor.com', 'Willink', 'contrasenna', 'Teodoro', '88888888'),
-('mariam@revisor.com', 'Mejías', 'contrasenna', 'Mariam', '88888888'),
-('fabian@coordinador', 'Fabian', 'contrasenna', 'Meléndez', '8888888');
+INSERT INTO usuario (pk_correo, apellidos, contrasenna, nombre, telefono, habilitado) VALUES
+('estudiante1@estudiante.com', 'Araya Jimémenez', 'contrasenna', 'Juan', '88888888', TRUE),
+('estudiante2@estudiante.com', 'Zuñiga Barrantes', 'contrasenna', 'Arturo', '88888888', TRUE),
+('estudiante3@estudiante.com', 'Castro Fallas', 'contrasenna', 'David', '88888888', TRUE),
+('estudiante4@estudiante.com', 'Hidalgo López', 'contrasenna', 'Francisco', '88888888', TRUE),
+('teo@revisor.com', 'Willink', 'contrasenna', 'Teodoro', '88888888', TRUE),
+('mariam@revisor.com', 'Mejías', 'contrasenna', 'Mariam', '88888888', TRUE),
+('fabian@coordinador', 'Fabian', 'contrasenna', 'Meléndez', '8888888', TRUE);
 
 INSERT INTO estudiante (pk_correo_usuario, carne, estado, fecha_final, fecha_inicio, horas_totales, tipo) VALUES
 ('estudiante1@estudiante.com', 'B64895', 'Activo', '2020-05-20', '2019-05-20', 4, 'Regular'),
