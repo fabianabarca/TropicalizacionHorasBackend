@@ -36,9 +36,11 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     public UsuarioEntidad consultarUsuarioPorId(String id){
         UsuarioEntidad usuarioEntidad = usuariosRepositorio.findById(id).orElse(null);
-        usuarioEntidad.setEstudiante(null);
-        usuarioEntidad.setRevisor(null);
-        usuarioEntidad.setContrasenna(null);
+        if(usuarioEntidad != null){
+            usuarioEntidad.setEstudiante(null);
+            usuarioEntidad.setRevisor(null);
+            usuarioEntidad.setContrasenna(null);
+        }
         return usuarioEntidad;
     }
 }
