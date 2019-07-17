@@ -27,14 +27,10 @@ import static org.springframework.http.ResponseEntity.ok;
 @RestController
 @RequestMapping(value = "/autenticar")
 public class AutenticacionControlador {
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final AutenticacionServicio autenticacionServicio;
+     private final AutenticacionServicio autenticacionServicio;
 
     @Autowired
-    public AutenticacionControlador(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, AutenticacionServicio autenticacionServicio) {
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenProvider = jwtTokenProvider;
+    public AutenticacionControlador(AutenticacionServicio autenticacionServicio) {
         this.autenticacionServicio = autenticacionServicio;
     }
 
@@ -43,7 +39,7 @@ public class AutenticacionControlador {
      *
      * @param infoUsuario Modelo del request de autenticación. Espera los atributos username y password
      * @return el JWT en caso de un sign in exitoso
-     * @throws MethodArgumentNotValidException Si la instancia de AutenticacionUsuario no se valido correctamente
+     * @throws MethodArgumentNotValidException Si la instancia de AutenticacionUsuario no se validó correctamente
      */
     @PostMapping("/sign-in")
     public ResponseEntity signIn(@Valid @RequestBody AutenticacionUsuario infoUsuario) throws MethodArgumentNotValidException {
