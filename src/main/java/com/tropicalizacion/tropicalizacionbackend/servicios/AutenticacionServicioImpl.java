@@ -12,9 +12,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-
-import static org.springframework.http.ResponseEntity.ok;
 
 @Service
 public class AutenticacionServicioImpl implements AutenticacionServicio {

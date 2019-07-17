@@ -39,7 +39,18 @@ public class ConfigSeguridad extends WebSecurityConfigurerAdapter {
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new PasswordEncoder() {
+            @Override
+            public String encode(CharSequence charSequence) {
+                return charSequence.toString();
+            }
+
+            @Override
+            public boolean matches(CharSequence charSequence, String s) {
+                return charSequence.toString().equals(s);
+            }
+        };
+        /*return new BCryptPasswordEncoder();*/
     }
 
     /**
