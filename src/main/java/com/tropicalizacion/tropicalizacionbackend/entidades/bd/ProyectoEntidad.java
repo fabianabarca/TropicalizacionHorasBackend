@@ -26,6 +26,9 @@ public class ProyectoEntidad {
     @Column(name = "descripcion", columnDefinition = "MEDIUMTEXT")
     private String descripcion;
 
+    @Column(name = "habilitado")
+    private boolean habilitado;
+
     @ManyToMany(mappedBy = "proyectos")
     private Set<EstudianteEntidad> estudiantes = new HashSet<>();
 

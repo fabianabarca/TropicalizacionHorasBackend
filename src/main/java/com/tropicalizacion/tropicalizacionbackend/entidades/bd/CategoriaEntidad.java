@@ -22,6 +22,9 @@ public class CategoriaEntidad {
     @Column(name = "pk_nombre", length = 40)
     private String nombre;
 
+    @Column(name = "habilitado")
+    private boolean habilitado;
+
     @OneToMany(mappedBy = "categoria")
     private Set<ActividadEntidad> actividades = new HashSet<>();
 }
