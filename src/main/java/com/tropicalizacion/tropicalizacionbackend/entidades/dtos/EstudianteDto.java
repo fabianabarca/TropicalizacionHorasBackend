@@ -14,15 +14,11 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EstudianteDto {
-    private String correoUsuario;
     private String tipo;
     private String estado;
     private Date fechaInicio;
     private Date fechaFinal;
     private String carne;
     private int horasTotales;
-    private String usuarioTelefono;
-    private String usuarioNombre;
-    private String usuarioApellidos;
-    private boolean usuarioHabilitado;
+    private UsuarioDto usuario;
 }

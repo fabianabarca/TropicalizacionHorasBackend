@@ -14,7 +14,6 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ActividadDto {
-    private String actividadCorreoEstudiante;
     private int actividadIdGenerado;
     private Date fecha;
     private int horas;
@@ -22,8 +21,8 @@ public class ActividadDto {
     private String detalles;
     private String justificacionRechazo;
     private boolean decision;
-    private String estudianteCorreoUsuario;
-    private String categoriaNombre;
-    private String proyectoNombre;
-    private String revisorEntidad;
+    private EstudianteDto estudiante;
+    private CategoriaDto categoria;
+    private ProyectoDto proyecto;
+    private RevisorDto revisor;
 }

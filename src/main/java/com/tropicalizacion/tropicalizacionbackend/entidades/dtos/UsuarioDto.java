@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter @Getter @Builder @AllArgsConstructor @NoArgsConstructor
 public class UsuarioDto {
     private String correo;
+    private String contrasenna;
     private String telefono;
     private String nombre;
     private String apellidos;

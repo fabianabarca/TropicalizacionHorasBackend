@@ -12,10 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RevisorDto {
-    private String correoUsuario;
     private boolean esCoordinador;
-    private String usuarioTelefono;
-    private String usuarioNombre;
-    private String usuarioApellidos;
-    private boolean usuarioHabilitado;
+    private UsuarioDto usuario;
 }

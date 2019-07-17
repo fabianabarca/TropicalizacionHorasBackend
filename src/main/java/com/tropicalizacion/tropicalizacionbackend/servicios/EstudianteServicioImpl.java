@@ -5,20 +5,25 @@ import com.tropicalizacion.tropicalizacionbackend.repositorios.EstudiantesReposi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EstudianteServicioImpl implements EstudianteServicio {
 
     private EstudiantesRepositorio estudiantesRepositorio;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public EstudianteServicioImpl(EstudiantesRepositorio estudiantesRepositorio){
+    public EstudianteServicioImpl(EstudiantesRepositorio estudiantesRepositorio, PasswordEncoder passwordEncoder){
         this.estudiantesRepositorio = estudiantesRepositorio;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public void agregarEstudiante(EstudianteEntidad EstudianteEntidad){
-
+    public void agregarEstudiante(EstudianteEntidad estudianteEntidad){
+        String contasennaEncriptada = passwordEncoder.encode(estudianteEntidad.getUsuario().getContrasenna());
+        estudianteEntidad.getUsuario().setContrasenna(contasennaEncriptada);
+        estudiantesRepositorio.save(estudianteEntidad);
     }
 
     public void borrarEstudiante(EstudianteEntidad EstudianteEntidad){
