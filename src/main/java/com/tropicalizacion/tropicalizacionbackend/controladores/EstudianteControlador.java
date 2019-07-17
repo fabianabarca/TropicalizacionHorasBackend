@@ -3,7 +3,7 @@ package com.tropicalizacion.tropicalizacionbackend.controladores;
 import com.tropicalizacion.tropicalizacionbackend.entidades.CustomResponse;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.EstudianteDto;
-import com.tropicalizacion.tropicalizacionbackend.servicios.EstudianteServicioImpl;
+import com.tropicalizacion.tropicalizacionbackend.servicios.EstudianteServicio;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/estudiante")
 @RestController
 public class EstudianteControlador {
-    private EstudianteServicioImpl estudianteServicio;
+    private EstudianteServicio estudianteServicio;
     private ModelMapper modelMapper;
 
     @Autowired
-    public EstudianteControlador(EstudianteServicioImpl EstudianteServicio, ModelMapper modelMapper){
+    public EstudianteControlador(EstudianteServicio EstudianteServicio, ModelMapper modelMapper){
         this.estudianteServicio = EstudianteServicio;
         this.modelMapper = modelMapper;
     }

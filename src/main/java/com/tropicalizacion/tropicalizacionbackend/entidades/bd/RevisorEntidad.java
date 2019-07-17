@@ -23,7 +23,6 @@ import java.util.Set;
 @Setter @Getter @Builder @AllArgsConstructor @NoArgsConstructor
 public class RevisorEntidad {
     @Id
-    @Column(name = "pk_correo_usuario", length = 100)
     private String correoUsuario;
 
     @Column(name = "es_coordinador")

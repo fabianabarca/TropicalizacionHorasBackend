@@ -1,11 +1,12 @@
+-- Todas las contraseñas son "contrasenna"
 INSERT INTO usuario (pk_correo, apellidos, contrasenna, nombre, telefono, habilitado) VALUES
-('estudiante1@estudiante.com', 'Araya Jimémenez', 'contrasenna', 'Juan', '88888888', TRUE),
-('estudiante2@estudiante.com', 'Zuñiga Barrantes', 'contrasenna', 'Arturo', '88888888', TRUE),
-('estudiante3@estudiante.com', 'Castro Fallas', 'contrasenna', 'David', '88888888', TRUE),
-('estudiante4@estudiante.com', 'Hidalgo López', 'contrasenna', 'Francisco', '88888888', TRUE),
-('teo@revisor.com', 'Willink', 'contrasenna', 'Teodoro', '88888888', TRUE),
-('mariam@revisor.com', 'Mejías', 'contrasenna', 'Mariam', '88888888', TRUE),
-('fabian@coordinador', 'Fabian', 'contrasenna', 'Meléndez', '8888888', TRUE);
+('estudiante1@estudiante.com', 'Araya Jimémenez', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Juan', '88888888', TRUE),
+('estudiante2@estudiante.com', 'Zuñiga Barrantes', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Arturo', '88888888', TRUE),
+('estudiante3@estudiante.com', 'Castro Fallas', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'David', '88888888', TRUE),
+('estudiante4@estudiante.com', 'Hidalgo López', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Francisco', '88888888', TRUE),
+('teo@revisor.com', 'Willink', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Teodoro', '88888888', TRUE),
+('mariam@revisor.com', 'Mejías', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Mariam', '88888888', TRUE),
+('fabian@coordinador', 'Fabian', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Meléndez', '8888888', TRUE);
 
 INSERT INTO estudiante (pk_correo_usuario, carne, estado, fecha_final, fecha_inicio, horas_totales, tipo) VALUES
 ('estudiante1@estudiante.com', 'B64895', 'Activo', '2020-05-20', '2019-05-20', 4, 'Regular'),

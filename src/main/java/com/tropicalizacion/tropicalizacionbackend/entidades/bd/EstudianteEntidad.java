@@ -26,7 +26,6 @@ import java.util.Set;
 @Setter @Getter @Builder @NoArgsConstructor @AllArgsConstructor
 public class EstudianteEntidad {
     @Id
-    @Column(name = "pk_correo_usuario", length = 100)
     private String correoUsuario;
 
     @Column(name = "tipo", columnDefinition = "ENUM('Traslado', 'Regular', 'Pasantía')", length = 10)
