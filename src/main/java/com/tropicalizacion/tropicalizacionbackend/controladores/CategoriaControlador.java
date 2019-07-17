@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
-import static org.springframework.http.ResponseEntity.ok;
-
 @CrossOrigin
 @RequestMapping(value = "/categoria")
 @RestController
