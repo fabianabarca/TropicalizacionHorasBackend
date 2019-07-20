@@ -2,11 +2,13 @@ package com.tropicalizacion.tropicalizacionbackend.servicios;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.UsuarioEntidad;
+import com.tropicalizacion.tropicalizacionbackend.excepciones.UsuarioYaExisteExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.EstudiantesRepositorio;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.UsuariosRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,10 @@ public class EstudianteServicioImpl implements EstudianteServicio {
     }
 
     public void agregarEstudiante(EstudianteEntidad estudianteEntidad){
+        if (usuariosRepositorio.findById(estudianteEntidad.getCorreoUsuario()).isPresent())
+            throw new UsuarioYaExisteExcepcion("El correo " + estudianteEntidad.getCorreoUsuario() + " ya está tomado",
+                    HttpStatus.CONFLICT, System.currentTimeMillis());
+
         // Codificar la contraseña dada
         String contasennaEncriptada = passwordEncoder.encode(estudianteEntidad.getUsuario().getContrasenna());
         estudianteEntidad.getUsuario().setContrasenna(contasennaEncriptada);
