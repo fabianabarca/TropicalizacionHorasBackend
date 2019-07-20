@@ -21,6 +21,6 @@ public class EstudianteDto {
     private Date fechaFinal;
     private String carne;
     private int horasTotales;
-    private Set<ProyectoDto> proyectos;
+    private Set<ProyectoSimpleDto> proyectos;
     private UsuarioDto usuario;
 }

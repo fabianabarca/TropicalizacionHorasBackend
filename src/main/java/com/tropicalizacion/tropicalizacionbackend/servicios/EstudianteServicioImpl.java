@@ -27,7 +27,7 @@ public class EstudianteServicioImpl implements EstudianteServicio {
     }
 
     public void agregarEstudiante(EstudianteEntidad estudianteEntidad){
-        if (usuariosRepositorio.findById(estudianteEntidad.getCorreoUsuario()).isPresent())
+        if (usuariosRepositorio.findById(estudianteEntidad.getUsuario().getCorreo()).isPresent())
             throw new UsuarioYaExisteExcepcion("El correo " + estudianteEntidad.getCorreoUsuario() + " ya está tomado",
                     HttpStatus.CONFLICT, System.currentTimeMillis());
 
@@ -35,13 +35,8 @@ public class EstudianteServicioImpl implements EstudianteServicio {
         String contasennaEncriptada = passwordEncoder.encode("contrasenna");
         estudianteEntidad.getUsuario().setContrasenna(contasennaEncriptada);
 
-        // Guardar la entidad de usuario sin la relación de estudiante
-        estudianteEntidad.getUsuario().setEstudiante(null);
         UsuarioEntidad usuarioGuardado = usuariosRepositorio.save(estudianteEntidad.getUsuario());
         estudianteEntidad.setUsuario(usuarioGuardado);
-
-        // Guardar el estudiante, el correo se pone en null porque luego hibernate lo setea.
-        estudianteEntidad.setCorreoUsuario(null);
         estudiantesRepositorio.save(estudianteEntidad);
     }
 
