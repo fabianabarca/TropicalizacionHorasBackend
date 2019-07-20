@@ -1,5 +1,6 @@
 package com.tropicalizacion.tropicalizacionbackend.excepciones;
 
+import com.tropicalizacion.tropicalizacionbackend.entidades.CustomResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,7 +18,7 @@ public class ExceptionsHandlers {
      * @return retorna la respuesta al cliente con la información de la excepción
      */
     @ExceptionHandler
-    public ResponseEntity<ExcepcionMensaje> handleException(ExcepcionGeneral e) {
-        return new ResponseEntity<>(e.getExcepcionMensaje(), e.getExcepcionMensaje().getEstado());
+    public ResponseEntity<CustomResponse> handleException(ExcepcionGeneral e) {
+        return new ResponseEntity<>(e.getExcepcionMensaje(), e.getEstado());
     }
 }

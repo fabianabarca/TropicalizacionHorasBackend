@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -20,5 +21,6 @@ public class EstudianteDto {
     private Date fechaFinal;
     private String carne;
     private int horasTotales;
+    private Set<ProyectoDto> proyectos;
     private UsuarioDto usuario;
 }

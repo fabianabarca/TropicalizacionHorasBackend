@@ -31,8 +31,8 @@ public class EstudianteServicioImpl implements EstudianteServicio {
             throw new UsuarioYaExisteExcepcion("El correo " + estudianteEntidad.getCorreoUsuario() + " ya está tomado",
                     HttpStatus.CONFLICT, System.currentTimeMillis());
 
-        // Codificar la contraseña dada
-        String contasennaEncriptada = passwordEncoder.encode(estudianteEntidad.getUsuario().getContrasenna());
+        // Codificar la contraseña dada, por ahora todas son "contrasenna", después el usuario tendrá que cambiarla
+        String contasennaEncriptada = passwordEncoder.encode("contrasenna");
         estudianteEntidad.getUsuario().setContrasenna(contasennaEncriptada);
 
         // Guardar la entidad de usuario sin la relación de estudiante

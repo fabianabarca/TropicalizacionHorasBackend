@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,7 +46,6 @@ public class EstudianteEntidad {
 
     @Column(name = "carne", length = 6, unique = true)
     @NotNull
-    @UniqueElements
     private String carne;
 
     @Column(name = "horas_totales")
