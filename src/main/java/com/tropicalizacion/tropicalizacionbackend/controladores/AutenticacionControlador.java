@@ -1,25 +1,27 @@
 package com.tropicalizacion.tropicalizacionbackend.controladores;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.AutenticacionUsuario;
+import com.tropicalizacion.tropicalizacionbackend.entidades.CustomResponse;
+import com.tropicalizacion.tropicalizacionbackend.entidades.RecuperarContrasenna;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.MalasCredencialesExcepcion;
-import com.tropicalizacion.tropicalizacionbackend.seguridad.jwt.JwtTokenProvider;
 import com.tropicalizacion.tropicalizacionbackend.servicios.AutenticacionServicio;
+import com.tropicalizacion.tropicalizacionbackend.servicios.TokenRecuperacionServicio;
+import com.tropicalizacion.tropicalizacionbackend.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Map;
+import javax.validation.constraints.Email;
+import java.security.Principal;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -28,10 +30,14 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping(value = "/autenticar")
 public class AutenticacionControlador {
      private final AutenticacionServicio autenticacionServicio;
+     private final TokenRecuperacionServicio tokenRecuperacionServicio;
+     private final UsuarioServicio usuarioServicio;
 
     @Autowired
-    public AutenticacionControlador(AutenticacionServicio autenticacionServicio) {
+    public AutenticacionControlador(AutenticacionServicio autenticacionServicio, TokenRecuperacionServicio tokenRecuperacionServicio, UsuarioServicio usuarioServicio) {
         this.autenticacionServicio = autenticacionServicio;
+        this.tokenRecuperacionServicio = tokenRecuperacionServicio;
+        this.usuarioServicio = usuarioServicio;
     }
 
     /**
@@ -42,11 +48,57 @@ public class AutenticacionControlador {
      * @throws MethodArgumentNotValidException Si la instancia de AutenticacionUsuario no se validó correctamente
      */
     @PostMapping("/sign-in")
-    public ResponseEntity signIn(@Valid @RequestBody AutenticacionUsuario infoUsuario) throws MethodArgumentNotValidException {
+    public ResponseEntity<CustomResponse> signIn(@Valid @RequestBody AutenticacionUsuario infoUsuario) throws MethodArgumentNotValidException {
         try {
-            return ok(autenticacionServicio.autenticarUsuario(infoUsuario.getCorreoUsuario(), infoUsuario.getContrasenna()));
+            CustomResponse response = new CustomResponse((Object) autenticacionServicio.autenticarUsuario(infoUsuario.getCorreoUsuario(), infoUsuario.getContrasenna()));
+            return ok(response);
         } catch (MalasCredencialesExcepcion e) {
             throw new MalasCredencialesExcepcion("Correo o contraseña inválido", HttpStatus.UNAUTHORIZED, System.currentTimeMillis());
         }
+    }
+
+    /**
+     * Endpoint para comenzar el proceso de recuperar la contraseña. Genera un token de
+     * recuperación que es guardado en la bd y enviado por correo
+     *
+     * @param correo Correo del usuario que desea recuperar su contraseña
+     * @return retorna ok si el proceso se realiza correctamenta
+     */
+    @PostMapping("/recuperar/{correo}")
+    public ResponseEntity<CustomResponse> recuperarContrasenna(@PathVariable @Email String correo) {
+        tokenRecuperacionServicio.generarToken(correo);
+        return ok(new CustomResponse("Se generó correctamente el token de recuperación", null, null));
+    }
+
+    /**
+     * Finaliza el proceso de recuperar contraseña.
+     * Valida que el token dado sea el mismo que el almacenado y lo borra si lo son. Luego realiza el cambio de la contraseña
+     *
+     * @param info Contiene la información del cambio de la contraseña
+     * @return ok si el proceso se realiza correctamente
+     */
+    @PutMapping("/recuperar")
+    ResponseEntity<CustomResponse> cambiarContrasennaRecuperacion(@Valid @RequestBody RecuperarContrasenna info) {
+        tokenRecuperacionServicio.validarYBorrarToken(info.getCorreo(), info.getTokenRecuperacion());
+        usuarioServicio.cambiarContrasenna(info.getCorreo(), info.getContrasennaNueva());
+        return ok(new CustomResponse("El cambio de contraseña fue exitoso", null, null));
+    }
+
+    /**
+     * Permite cambiar la contraseña del usuario en caso de que ya estuviera loggeado
+     *
+     * @param usuario usuario loggeado
+     * @param contrasennaNueva contraseña nueva que desea el usuario
+     * @return ok si sale bien el proceso
+     */
+    @PutMapping("/cambiar-contrasenna")
+    ResponseEntity<CustomResponse> cambiarContrasenna(Principal usuario, @RequestBody String contrasennaNueva) {
+        if (usuario == null)
+            throw new MalasCredencialesExcepcion("Debe estar loggeado para cambiar la contrasenna",
+                    HttpStatus.UNAUTHORIZED,
+                    System.currentTimeMillis());
+
+        usuarioServicio.cambiarContrasenna(usuario.getName(), contrasennaNueva);
+        return ok(new CustomResponse());
     }
 }

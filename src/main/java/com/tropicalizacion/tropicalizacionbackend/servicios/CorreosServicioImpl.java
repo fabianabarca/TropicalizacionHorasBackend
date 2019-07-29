@@ -20,4 +20,13 @@ public class CorreosServicioImpl implements CorreosServicio {
         message.setText("Su contraseña para ingresar al sistema de registro de horas del TCU es " + contrasenna);
         emailSender.send(message);
     }
+
+    @Override
+    public void enviarCorreoGenerico(String correo, String motivo, String texto) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(correo);
+        message.setSubject(motivo);
+        message.setText(texto);
+        emailSender.send(message);
+    }
 }

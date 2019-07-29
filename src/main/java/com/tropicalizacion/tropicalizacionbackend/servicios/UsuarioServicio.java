@@ -2,7 +2,6 @@ package com.tropicalizacion.tropicalizacionbackend.servicios;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.UsuarioEntidad;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 public interface UsuarioServicio {
 
@@ -15,4 +14,12 @@ public interface UsuarioServicio {
     Page<UsuarioEntidad> getUsuarios(Integer pagina, Integer limite);
 
     UsuarioEntidad consultarUsuarioPorId(String id);
+
+    /**
+     * Cambia el campo de contrasenna de un usuario
+     *
+     * @param correo correo del usaurio a cambiar
+     * @param contrasennaNueva contraseña nueva del usuario
+     */
+    void cambiarContrasenna(String correo, String contrasennaNueva);
 }
