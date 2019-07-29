@@ -5,6 +5,8 @@ import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad
 import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.EstudianteDto;
 import com.tropicalizacion.tropicalizacionbackend.servicios.EstudianteServicio;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ public class EstudianteControlador {
     public EstudianteControlador(EstudianteServicio EstudianteServicio, ModelMapper modelMapper){
         this.estudianteServicio = EstudianteServicio;
         this.modelMapper = modelMapper;
+        this.modelMapper.getConfiguration().setAmbiguityIgnored(true);
     }
 
     @PostMapping
@@ -41,8 +44,12 @@ public class EstudianteControlador {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<CustomResponse> getEstudiante(@PathVariable String id){
-        EstudianteEntidad EstudianteEntidad =  estudianteServicio.consultarEstudiantePorId(id);
-        return new ResponseEntity<>(new CustomResponse(EstudianteEntidad), HttpStatus.OK);
+        EstudianteEntidad estudianteEntidad =  estudianteServicio.consultarEstudiantePorId(id);
+        EstudianteDto estudianteDto = modelMapper.map(estudianteEntidad, EstudianteDto.class);
+        estudianteDto.getUsuario().setCorreo(estudianteEntidad.getCorreoUsuario());
+        estudianteDto.getProyectos().clear();
+        estudianteEntidad.getProyectos().forEach(proyecto -> estudianteDto.getProyectos().add(proyecto.getNombre()));
+        return new ResponseEntity<>(new CustomResponse(estudianteDto), HttpStatus.OK);
     }
 
 }

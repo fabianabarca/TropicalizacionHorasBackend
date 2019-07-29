@@ -2,8 +2,10 @@ package com.tropicalizacion.tropicalizacionbackend.servicios;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.UsuarioEntidad;
+import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.EstudianteDto;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.EstudiantesRepositorio;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.UsuariosRepositorio;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,9 +18,12 @@ public class EstudianteServicioImpl implements EstudianteServicio {
     private EstudiantesRepositorio estudiantesRepositorio;
     private UsuariosRepositorio usuariosRepositorio;
     private PasswordEncoder passwordEncoder;
+    private ModelMapper modelMapper;
 
     @Autowired
-    public EstudianteServicioImpl(EstudiantesRepositorio estudiantesRepositorio, UsuariosRepositorio usuariosRepositorio, PasswordEncoder passwordEncoder){
+    public EstudianteServicioImpl(EstudiantesRepositorio estudiantesRepositorio,
+                                  UsuariosRepositorio usuariosRepositorio,
+                                  PasswordEncoder passwordEncoder){
         this.estudiantesRepositorio = estudiantesRepositorio;
         this.usuariosRepositorio = usuariosRepositorio;
         this.passwordEncoder = passwordEncoder;
@@ -48,19 +53,12 @@ public class EstudianteServicioImpl implements EstudianteServicio {
     }
 
     public Page<EstudianteEntidad> getEstudiantes(Integer pagina, Integer limite){
-        Page<EstudianteEntidad> EstudianteEntidadPage =  estudiantesRepositorio.findAll(PageRequest.of(pagina, limite));
-        return EstudianteEntidadPage;
+        Page<EstudianteEntidad> estudianteEntidadPage =  estudiantesRepositorio.findAll(PageRequest.of(pagina, limite));
+        return estudianteEntidadPage;
     }
 
     public EstudianteEntidad consultarEstudiantePorId(String id){
-        EstudianteEntidad EstudianteEntidad = estudiantesRepositorio.findById(id).orElse(null);
-        if(EstudianteEntidad != null){
-            EstudianteEntidad.getProyectos().forEach(proyecto -> {
-                proyecto.setEstudiantes(null);
-                proyecto.setActividades(null);
-            });
-            EstudianteEntidad.getUsuario().setEstudiante(null);
-        }
-        return EstudianteEntidad;
+        EstudianteEntidad estudianteEntidad = estudiantesRepositorio.findById(id).orElse(null);
+        return estudianteEntidad;
     }
 }

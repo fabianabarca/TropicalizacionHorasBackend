@@ -25,6 +25,7 @@ import java.util.Set;
 @Table(name = "estudiante")
 @Setter @Getter @Builder @NoArgsConstructor @AllArgsConstructor
 public class EstudianteEntidad {
+
     @Id
     private String correoUsuario;
 

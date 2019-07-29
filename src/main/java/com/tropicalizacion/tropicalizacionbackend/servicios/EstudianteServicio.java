@@ -1,6 +1,7 @@
 package com.tropicalizacion.tropicalizacionbackend.servicios;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad;
+import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.EstudianteDto;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,9 @@
 package com.tropicalizacion.tropicalizacionbackend.servicios;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.UsuarioEntidad;
+import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.UsuarioDto;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.UsuariosRepositorio;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,10 +13,12 @@ import org.springframework.stereotype.Service;
 public class UsuarioServicioImpl implements UsuarioServicio {
 
     private UsuariosRepositorio usuariosRepositorio;
+    private ModelMapper modelMapper;
 
     @Autowired
-    public UsuarioServicioImpl(UsuariosRepositorio usuariosRepositorio){
+    public UsuarioServicioImpl(UsuariosRepositorio usuariosRepositorio, ModelMapper modelMapper){
         this.usuariosRepositorio = usuariosRepositorio;
+        this.modelMapper = modelMapper;
     }
 
     public void agregarUsuario(UsuarioEntidad usuarioEntidad){
@@ -36,6 +40,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     public UsuarioEntidad consultarUsuarioPorId(String id){
         UsuarioEntidad usuarioEntidad = usuariosRepositorio.findById(id).orElse(null);
+        UsuarioDto usuarioDto = modelMapper.map(usuarioEntidad, UsuarioDto.class);
         if(usuarioEntidad != null){
             usuarioEntidad.setEstudiante(null);
             usuarioEntidad.setRevisor(null);

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 @Setter
 @Getter
@@ -21,4 +22,5 @@ public class EstudianteDto {
     private String carne;
     private int horasTotales;
     private UsuarioDto usuario;
+    private ArrayList<String> proyectos;
 }
