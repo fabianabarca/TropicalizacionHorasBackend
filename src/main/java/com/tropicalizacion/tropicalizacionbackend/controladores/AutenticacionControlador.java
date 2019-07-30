@@ -10,6 +10,8 @@ import com.tropicalizacion.tropicalizacionbackend.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,8 +68,8 @@ public class AutenticacionControlador {
      */
     @PostMapping("/recuperar/{correo}")
     public ResponseEntity<CustomResponse> recuperarContrasenna(@PathVariable @Email String correo) {
-        tokenRecuperacionServicio.generarToken(correo);
-        return ok(new CustomResponse("Se generó correctamente el token de recuperación", null, null));
+        String token = tokenRecuperacionServicio.generarToken(correo);
+        return ok(new CustomResponse("Se generó correctamente el token de recuperación " + token, null, null));
     }
 
     /**
@@ -92,13 +94,9 @@ public class AutenticacionControlador {
      * @return ok si sale bien el proceso
      */
     @PutMapping("/cambiar-contrasenna")
-    ResponseEntity<CustomResponse> cambiarContrasenna(Principal usuario, @RequestBody String contrasennaNueva) {
-        if (usuario == null)
-            throw new MalasCredencialesExcepcion("Debe estar loggeado para cambiar la contrasenna",
-                    HttpStatus.UNAUTHORIZED,
-                    System.currentTimeMillis());
-
+    @PreAuthorize("isAuthenticated()")
+    ResponseEntity<CustomResponse> cambiarContrasenna(@AuthenticationPrincipal Principal usuario, @RequestBody String contrasennaNueva) {
         usuarioServicio.cambiarContrasenna(usuario.getName(), contrasennaNueva);
-        return ok(new CustomResponse());
+        return ok(new CustomResponse("Cambio exitoso", null, null));
     }
 }

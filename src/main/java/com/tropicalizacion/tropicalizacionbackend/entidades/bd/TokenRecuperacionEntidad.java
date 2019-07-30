@@ -22,7 +22,7 @@ public class TokenRecuperacionEntidad {
     @Id
     private String correoUsuario;
 
-    @Column(name = "token", length = 10)
+    @Column(name = "token", length = 60)
     @NotNull
     private String token;
 

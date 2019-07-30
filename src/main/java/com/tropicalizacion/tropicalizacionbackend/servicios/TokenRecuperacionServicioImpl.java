@@ -34,7 +34,7 @@ public class TokenRecuperacionServicioImpl implements  TokenRecuperacionServicio
                                 HttpStatus.NOT_FOUND,
                                 System.currentTimeMillis()));
 
-        String tokenRecuperacion = RandomStringUtils.random(10, true, true);
+        String tokenRecuperacion = RandomStringUtils.random(5, true, true);
         TokenRecuperacionEntidad token = TokenRecuperacionEntidad.builder()
                 .usuario(usuario)
                 .token(passwordEncoder.encode(tokenRecuperacion))
@@ -58,7 +58,7 @@ public class TokenRecuperacionServicioImpl implements  TokenRecuperacionServicio
                                 System.currentTimeMillis()));
 
         tokenRepositorio.findById(correo)
-                .filter(t -> t.getToken().equals(passwordEncoder.encode(token)))
+                .filter(t -> passwordEncoder.matches(token, t.getToken()))
                 .map(t -> {
                     tokenRepositorio.delete(t);
                     return t;
