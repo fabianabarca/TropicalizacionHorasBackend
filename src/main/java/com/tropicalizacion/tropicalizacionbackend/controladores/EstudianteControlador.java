@@ -53,7 +53,7 @@ public class EstudianteControlador {
     @GetMapping(value = "/{id}")
     public ResponseEntity<CustomResponse> getEstudiante(@PathVariable String id){
         EstudianteEntidad EstudianteEntidad =  estudianteServicio.consultarEstudiantePorId(id);
-        return new ResponseEntity<>(new CustomResponse(EstudianteEntidad), HttpStatus.OK);
+        return new ResponseEntity<>(new CustomResponse(modelMapper.map(EstudianteEntidad, EstudianteDto.class)), HttpStatus.OK);
     }
 
 }
