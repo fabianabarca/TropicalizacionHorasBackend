@@ -45,7 +45,7 @@ public class EstudianteEntidad {
     @NotNull
     private Date fechaFinal;
 
-    @Column(name = "carne", length = 6)
+    @Column(name = "carne", length = 6, unique = true)
     @NotNull
     private String carne;
 
