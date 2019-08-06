@@ -26,7 +26,7 @@ public class CategoriaControlador {
     @PostMapping
     public ResponseEntity<CustomResponse> agregarCategoria(CategoriaEntidad categoriaEntidad){
         categoriaServicio.agregarCategoria(categoriaEntidad);
-        return new ResponseEntity<>(new CustomResponse(), HttpStatus.OK);
+        return new ResponseEntity<>(new CustomResponse(""), HttpStatus.OK);
     }
 
     @GetMapping
