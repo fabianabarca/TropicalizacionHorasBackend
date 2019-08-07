@@ -6,8 +6,12 @@ import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 public interface ActividadesRepositorio extends JpaRepository<ActividadEntidad, ActividadEntidadPK>  {
 
-    Page<ActividadEntidad> findByEstudiante(EstudianteEntidad estudiante, Pageable pageable);
+    Page<ActividadEntidad> findByActividadEntidadPKCorreoEstudiante(String correo, Pageable pageable);
 }

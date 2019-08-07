@@ -43,7 +43,7 @@ public class ActividadEntidad {
     private String justificacionRechazo;
 
     @Column(name = "decision")
-    private boolean decision;
+    private char decision;
 
     @ManyToOne
     @MapsId("correoEstudiante")

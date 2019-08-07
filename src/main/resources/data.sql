@@ -44,8 +44,8 @@ INSERT INTO estudiante_participa_proyecto (fk_estudiante_correo, fk_proyecto_nom
 ('josed1608@gmail.com', 'RRSS');
 
 INSERT INTO actividad (fk_correo_estudiante, id_generado, decision, detalles, estado, fecha, horas, justificacion_rechazo, fk_nombre_categoria, fk_nombre_proyecto, fk_correo_revisor) VALUES
-('estudiante1@estudiante.com', 1, null, 'Desarrollar aplicación', 'Pendiente', '2019-07-12', 4, null, 'Trabajo', 'Mapa de Osa', null),
-('estudiante2@estudiante.com', 1, null, 'Redacción de material', 'Pendiente', '2019-07-12', 2, null, 'Trabajo', 'Ingreso a la U', null),
-('estudiante3@estudiante.com', 1, null, 'Reunión de planificación', 'Pendiente', '2019-07-12', 1, null, 'Reunión', 'Factura electrónica', null),
-('estudiante4@estudiante.com', 1, true, 'Gira', 'Aprobada', '2019-06-20', 30, '', 'Gira', 'RRSS', 'mariam@revisor.com');
+('estudiante1@estudiante.com', 1, 'P', 'Desarrollar aplicación', 'Pendiente', '2019-07-12', 4, null, 'Trabajo', 'Mapa de Osa', null),
+('estudiante2@estudiante.com', 1, 'P', 'Redacción de material', 'Pendiente', '2019-07-12', 2, null, 'Trabajo', 'Ingreso a la U', null),
+('estudiante3@estudiante.com', 1, 'P', 'Reunión de planificación', 'Pendiente', '2019-07-12', 1, null, 'Reunión', 'Factura electrónica', null),
+('estudiante4@estudiante.com', 1, 'A', 'Gira', 'Aprobada', '2019-06-20', 30, '', 'Gira', 'RRSS', 'mariam@revisor.com');
 
