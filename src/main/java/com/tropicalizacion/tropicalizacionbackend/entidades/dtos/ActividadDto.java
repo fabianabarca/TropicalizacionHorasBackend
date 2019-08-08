@@ -20,7 +20,6 @@ public class ActividadDto {
     private String estado;
     private String detalles;
     private String justificacionRechazo;
-    private char decision;
     private EstudianteDto estudiante;
     private CategoriaDto categoria;
     private ProyectoDto proyecto;

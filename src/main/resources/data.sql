@@ -48,6 +48,9 @@ INSERT INTO actividad (fk_correo_estudiante, id_generado, detalles, estado, fech
 ('estudiante1@estudiante.com', 2, 'Desarrollar aplicación', 'Aprobada', '2019-07-13', 3, null, 'Trabajo', 'Mapa de Osa', null),
 ('estudiante1@estudiante.com', 3, 'Desarrollar aplicación', 'Pendiente', '2019-06-14', 8, null, 'Trabajo', 'Mapa de Osa', null),
 ('estudiante1@estudiante.com', 4, 'Desarrollar aplicación', 'Pendiente', '2019-07-15', 10, null, 'Trabajo', 'Mapa de Osa', null),
+('estudiante1@estudiante.com', 5, 'Desarrollar aplicación', 'Pendiente', '2019-05-15', 10, null, 'Trabajo', 'Mapa de Osa', null),
+('estudiante1@estudiante.com', 6, 'Desarrollar aplicación', 'Pendiente', '2019-06-15', 10, null, 'Trabajo', 'Mapa de Osa', null),
+('estudiante1@estudiante.com', 7, 'Desarrollar aplicación', 'Pendiente', '2019-02-15', 10, null, 'Trabajo', 'Mapa de Osa', null),
 ('estudiante2@estudiante.com', 1, 'Redacción de material', 'Pendiente', '2019-07-12', 2, null, 'Trabajo', 'Ingreso a la U', null),
 ('estudiante3@estudiante.com', 1, 'Reunión de planificación', 'Pendiente', '2019-07-12', 1, null, 'Reunión', 'Factura electrónica', null),
 ('estudiante4@estudiante.com', 1, 'Gira', 'Aprobada', '2019-06-20', 30, '', 'Gira', 'RRSS', 'mariam@revisor.com');
