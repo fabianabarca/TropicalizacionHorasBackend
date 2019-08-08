@@ -1,7 +1,6 @@
 package com.tropicalizacion.tropicalizacionbackend.servicios;
 
 import com.tropicalizacion.tropicalizacionbackend.excepciones.MalasCredencialesExcepcion;
-import org.springframework.stereotype.Service;
 
 public interface AutenticacionServicio {
     /**
@@ -13,4 +12,12 @@ public interface AutenticacionServicio {
      * @return el token del usuario
      */
     String autenticarUsuario(String correo, String contrasenna) throws MalasCredencialesExcepcion;
+
+    /**
+     * Valida si el jwt es valido
+     *
+     * @param token el token a validar
+     * @return retorna true si es válido y false si no
+     */
+    boolean esTokenValido(String token);
 }

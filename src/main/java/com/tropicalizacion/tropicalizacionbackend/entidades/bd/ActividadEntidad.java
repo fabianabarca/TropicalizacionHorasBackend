@@ -42,9 +42,6 @@ public class ActividadEntidad {
     @Column(name = "justificacion_rechazo", columnDefinition = "MEDIUMTEXT")
     private String justificacionRechazo;
 
-    @Column(name = "decision")
-    private char decision;
-
     @ManyToOne
     @MapsId("correoEstudiante")
     @JoinColumn(name = "fk_correo_estudiante", referencedColumnName = "pk_correo_usuario")

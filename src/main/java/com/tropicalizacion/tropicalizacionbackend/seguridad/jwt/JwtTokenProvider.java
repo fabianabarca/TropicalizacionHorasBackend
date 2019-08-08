@@ -115,7 +115,7 @@ public class JwtTokenProvider {
             return !claims.getBody().getExpiration().before(new Date());
         }
         catch (JwtException | IllegalArgumentException e) {
-            throw new JwtInvalidoExcepcion("Expired or invalid JWT token", HttpStatus.UNAUTHORIZED, System.currentTimeMillis());
+            throw new JwtInvalidoExcepcion("JWT inválido", HttpStatus.UNAUTHORIZED, System.currentTimeMillis());
         }
     }
 

@@ -3,6 +3,7 @@ package com.tropicalizacion.tropicalizacionbackend.controladores;
 import com.tropicalizacion.tropicalizacionbackend.entidades.AutenticacionUsuario;
 import com.tropicalizacion.tropicalizacionbackend.entidades.CustomResponse;
 import com.tropicalizacion.tropicalizacionbackend.entidades.RecuperarContrasenna;
+import com.tropicalizacion.tropicalizacionbackend.excepciones.JwtInvalidoExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.MalasCredencialesExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.servicios.AutenticacionServicio;
 import com.tropicalizacion.tropicalizacionbackend.servicios.TokenRecuperacionServicio;
@@ -14,11 +15,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -57,6 +60,21 @@ public class AutenticacionControlador {
         } catch (MalasCredencialesExcepcion e) {
             throw new MalasCredencialesExcepcion("Correo o contraseña inválido", HttpStatus.UNAUTHORIZED, System.currentTimeMillis());
         }
+    }
+
+    /**
+     * Valida si el token dado es válido
+     *
+     * @param token token a validar
+     * @return retornar ok si es válido o Unauthorized si no
+     */
+    @GetMapping("/validar")
+    public ResponseEntity<CustomResponse> validarToken(@RequestParam String token) {
+        boolean validez = this.autenticacionServicio.esTokenValido(token);
+        if (validez)
+            return ok(new CustomResponse());
+        else
+            throw new JwtInvalidoExcepcion("Jwt vencido", HttpStatus.UNAUTHORIZED, System.currentTimeMillis());
     }
 
     /**

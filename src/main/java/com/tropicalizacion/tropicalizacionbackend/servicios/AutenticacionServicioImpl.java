@@ -46,4 +46,9 @@ public class AutenticacionServicioImpl implements AutenticacionServicio {
             throw new MalasCredencialesExcepcion("", HttpStatus.UNAUTHORIZED, System.currentTimeMillis());
         }
     }
+
+    @Override
+    public boolean esTokenValido(String token) {
+        return jwtTokenProvider.validateToken(token);
+    }
 }
