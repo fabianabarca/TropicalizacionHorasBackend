@@ -2,7 +2,8 @@ package com.tropicalizacion.tropicalizacionbackend.servicios;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ActividadEntidad;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 
 public interface ActividadServicio {
@@ -15,5 +16,5 @@ public interface ActividadServicio {
 
     Page<ActividadEntidad> getActividades(Integer pagina, Integer limite);
 
-    Page<ActividadEntidad> consultarActividadPorEstudiante(String correoEstudiante, Integer pagina, Integer limite);
+    ArrayList<ActividadEntidad> consultarActividadPorEstudiante(String correoEstudiante, Integer pagina, Integer limite);
 }

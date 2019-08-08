@@ -45,6 +45,9 @@ INSERT INTO estudiante_participa_proyecto (fk_estudiante_correo, fk_proyecto_nom
 
 INSERT INTO actividad (fk_correo_estudiante, id_generado, decision, detalles, estado, fecha, horas, justificacion_rechazo, fk_nombre_categoria, fk_nombre_proyecto, fk_correo_revisor) VALUES
 ('estudiante1@estudiante.com', 1, 'P', 'Desarrollar aplicación', 'Pendiente', '2019-07-12', 4, null, 'Trabajo', 'Mapa de Osa', null),
+('estudiante1@estudiante.com', 2, 'A', 'Desarrollar aplicación', 'Aprobada', '2019-07-13', 3, null, 'Trabajo', 'Mapa de Osa', null),
+('estudiante1@estudiante.com', 3, 'P', 'Desarrollar aplicación', 'Pendiente', '2019-06-14', 8, null, 'Trabajo', 'Mapa de Osa', null),
+('estudiante1@estudiante.com', 4, 'P', 'Desarrollar aplicación', 'Pendiente', '2019-07-15', 10, null, 'Trabajo', 'Mapa de Osa', null),
 ('estudiante2@estudiante.com', 1, 'P', 'Redacción de material', 'Pendiente', '2019-07-12', 2, null, 'Trabajo', 'Ingreso a la U', null),
 ('estudiante3@estudiante.com', 1, 'P', 'Reunión de planificación', 'Pendiente', '2019-07-12', 1, null, 'Reunión', 'Factura electrónica', null),
 ('estudiante4@estudiante.com', 1, 'A', 'Gira', 'Aprobada', '2019-06-20', 30, '', 'Gira', 'RRSS', 'mariam@revisor.com');

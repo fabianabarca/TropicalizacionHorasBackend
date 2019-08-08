@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @CrossOrigin
@@ -37,7 +38,11 @@ public class ActividadControlador {
     @GetMapping
     public ResponseEntity<CustomResponse> consultarActividadesPorEstudiante(
             @RequestParam(value="correo", required=false) String correo){
-        Page actividadEntidadPage =  actividadServicio.consultarActividadPorEstudiante(correo,0, 10);
-        return new ResponseEntity<>(new CustomResponse(actividadEntidadPage), HttpStatus.OK);
+        ArrayList<ActividadEntidad> actividadEntidadPage = actividadServicio.consultarActividadPorEstudiante(correo,0, 10);
+        ArrayList<ActividadDto> actividadDtoArrayList = new ArrayList<>();
+        actividadEntidadPage.forEach(actividad -> {
+            actividadDtoArrayList.add(modelMapper.map(actividad, ActividadDto.class));
+        });
+        return new ResponseEntity<>(new CustomResponse(actividadDtoArrayList), HttpStatus.OK);
     }
 }
