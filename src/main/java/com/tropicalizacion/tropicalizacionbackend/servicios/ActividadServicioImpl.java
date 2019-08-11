@@ -54,7 +54,7 @@ public class ActividadServicioImpl implements ActividadServicio{
     }
 
     public ArrayList<ActividadEntidad> consultarActividadPorEstudiante(String correoEstudiante, Integer pagina, Integer limite){
-        ArrayList<ActividadEntidad> actividadEntidadArrayList = actividadesRepositorio.findByEstudiante(correoEstudiante);
+        ArrayList<ActividadEntidad> actividadEntidadArrayList = actividadesRepositorio.findByEstudiante(EstudianteEntidad.builder().correoUsuario(correoEstudiante).build());
 //        ArrayList<ActividadEntidad> actividadEntidadArrayList = actividadesRepositorio.findByActividadEntidadPKCorreoEstudiante(correoEstudiante);
         return actividadEntidadArrayList;
     }
