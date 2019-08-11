@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ActividadesRepositorio extends JpaRepository<ActividadEntidad, ActividadEntidadPK>  {
+public interface ActividadesRepositorio extends JpaRepository<ActividadEntidad, Integer>  {
 
-    ArrayList<ActividadEntidad> findByActividadEntidadPKCorreoEstudiante(String correo);
+    ArrayList<ActividadEntidad> findByEstudiante(String correo);
 }

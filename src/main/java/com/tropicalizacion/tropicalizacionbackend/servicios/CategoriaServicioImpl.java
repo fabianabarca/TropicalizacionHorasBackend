@@ -3,11 +3,10 @@ package com.tropicalizacion.tropicalizacionbackend.servicios;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.CategoriaEntidad;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.CategoriasRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CategoriaServicioImpl implements CategoriaServicio {
@@ -31,12 +30,8 @@ public class CategoriaServicioImpl implements CategoriaServicio {
 
     }
 
-    public Page<CategoriaEntidad> getCategorias(Integer pagina, Integer limite){
-        return categoriasRepositorio.findAll(PageRequest.of(pagina, limite));
-    }
-
-    public ArrayList<String> getCategoriasNombre(Integer pagina, Integer limite){
-        Page<CategoriaEntidad> categorias =  categoriasRepositorio.findAll(PageRequest.of(pagina, limite));
+    public ArrayList<String> getCategoriasNombre(){
+        List<CategoriaEntidad> categorias =  categoriasRepositorio.findAll();
         ArrayList<String> categoriasNombre = new ArrayList<>();
         categorias.forEach(categoria -> categoriasNombre.add(categoria.getNombre()));
         return categoriasNombre;

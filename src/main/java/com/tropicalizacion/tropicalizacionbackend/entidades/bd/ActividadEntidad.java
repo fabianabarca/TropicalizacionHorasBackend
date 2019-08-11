@@ -6,13 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
@@ -20,8 +14,14 @@ import java.sql.Date;
 @Table(name = "actividad")
 @Setter @Getter @Builder @AllArgsConstructor @NoArgsConstructor
 public class ActividadEntidad {
-    @EmbeddedId
-    private ActividadEntidadPK actividadEntidadPK;
+//    @Id
+//    @Column(name = "fk_correo_estudiante", length = 100)
+//    private String correoEstudiante;
+
+    @Id
+    @Column(name = "id_generado")
+    @GeneratedValue
+    private int idGenerado;
 
     @Column(name = "fecha")
     @NotNull

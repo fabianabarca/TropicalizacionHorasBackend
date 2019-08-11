@@ -29,7 +29,7 @@ public class ActividadControlador {
     }
 
     @PostMapping
-    public ResponseEntity<CustomResponse> agregarActividad(ActividadDto actividadDto){
+    public ResponseEntity<CustomResponse> agregarActividad(@RequestBody ActividadDto actividadDto){
         ActividadEntidad actividadEntidad = modelMapper.map(actividadDto, ActividadEntidad.class);
         actividadServicio.agregarActividad(actividadEntidad);
         return new ResponseEntity<>(new CustomResponse(""), HttpStatus.OK);

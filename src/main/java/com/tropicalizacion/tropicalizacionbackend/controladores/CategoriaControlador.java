@@ -31,7 +31,7 @@ public class CategoriaControlador {
 
     @GetMapping
     public ResponseEntity<CustomResponse> getCategoriasNombre(){
-        ArrayList<String> categoriasNombre =  categoriaServicio.getCategoriasNombre(0, 10);
+        ArrayList<String> categoriasNombre =  categoriaServicio.getCategoriasNombre();
         return new ResponseEntity<>(new CustomResponse(categoriasNombre), HttpStatus.OK);
     }
 }

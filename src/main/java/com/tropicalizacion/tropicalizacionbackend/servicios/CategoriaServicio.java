@@ -1,8 +1,7 @@
 package com.tropicalizacion.tropicalizacionbackend.servicios;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.CategoriaEntidad;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 
 public interface CategoriaServicio {
 
@@ -12,5 +11,5 @@ public interface CategoriaServicio {
 
     void modificarCategoria(CategoriaEntidad categoriaEntidad);
 
-    Page<CategoriaEntidad> getCategorias(Integer pagina, Integer limite);
+    ArrayList<String> getCategoriasNombre();
 }
