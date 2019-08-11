@@ -1,7 +1,6 @@
 package com.tropicalizacion.tropicalizacionbackend.servicios;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ActividadEntidad;
-import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ActividadEntidadPK;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.ActividadesRepositorio;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.CategoriasRepositorio;
@@ -36,10 +35,6 @@ public class ActividadServicioImpl implements ActividadServicio{
     public void agregarActividad(ActividadEntidad actividadEntidad){
         try{
             EstudianteEntidad estudianteEntidad = estudiantesRepositorio.findById(actividadEntidad.getEstudiante().getUsuario().getCorreo()).orElse(null);
-//            actividadEntidad.setEstudiante(estudianteEntidad);
-//            ActividadEntidadPK actividadEntidadPK = new ActividadEntidadPK();
-//            actividadEntidadPK.setCorreoEstudiante(estudianteEntidad.getCorreoUsuario());
-//            actividadEntidad.setActividadEntidadPK(actividadEntidadPK);
             actividadesRepositorio.save(actividadEntidad);
         } catch (Exception e){
             e.printStackTrace();

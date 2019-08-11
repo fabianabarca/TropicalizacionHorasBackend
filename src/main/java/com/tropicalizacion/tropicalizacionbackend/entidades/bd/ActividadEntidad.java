@@ -14,10 +14,6 @@ import java.sql.Date;
 @Table(name = "actividad")
 @Setter @Getter @Builder @AllArgsConstructor @NoArgsConstructor
 public class ActividadEntidad {
-//    @Id
-//    @Column(name = "fk_correo_estudiante", length = 100)
-//    private String correoEstudiante;
-
     @Id
     @Column(name = "id_generado")
     @GeneratedValue
