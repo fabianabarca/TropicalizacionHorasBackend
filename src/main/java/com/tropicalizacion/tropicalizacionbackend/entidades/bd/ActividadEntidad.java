@@ -10,13 +10,16 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
+import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.GenerationType.SEQUENCE;
+
 @Entity
 @Table(name = "actividad")
 @Setter @Getter @Builder @AllArgsConstructor @NoArgsConstructor
 public class ActividadEntidad {
     @Id
     @Column(name = "id_generado")
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     private int idGenerado;
 
     @Column(name = "fecha")
@@ -39,16 +42,18 @@ public class ActividadEntidad {
     private String justificacionRechazo;
 
     @ManyToOne
-    @MapsId("correoEstudiante")
+//    @JoinColumn(name = "fk_correo_estudiante")
     @JoinColumn(name = "fk_correo_estudiante", referencedColumnName = "pk_correo_usuario")
     private EstudianteEntidad estudiante;
 
     @ManyToOne
+//    @JoinColumn(name = "fk_nombre_categoria")
     @JoinColumn(name = "fk_nombre_categoria", referencedColumnName = "pk_nombre")
     @NotNull
     private CategoriaEntidad categoria;
 
     @ManyToOne
+//    @JoinColumn(name = "fk_nombre_proyecto")
     @JoinColumn(name = "fk_nombre_proyecto", referencedColumnName = "pk_nombre")
     @NotNull
     private ProyectoEntidad proyecto;

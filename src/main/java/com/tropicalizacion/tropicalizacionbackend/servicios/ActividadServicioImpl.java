@@ -1,7 +1,9 @@
 package com.tropicalizacion.tropicalizacionbackend.servicios;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ActividadEntidad;
+import com.tropicalizacion.tropicalizacionbackend.entidades.bd.CategoriaEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad;
+import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ProyectoEntidad;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.ActividadesRepositorio;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.CategoriasRepositorio;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.EstudiantesRepositorio;
@@ -35,6 +37,11 @@ public class ActividadServicioImpl implements ActividadServicio{
     public void agregarActividad(ActividadEntidad actividadEntidad){
         try{
             EstudianteEntidad estudianteEntidad = estudiantesRepositorio.findById(actividadEntidad.getEstudiante().getUsuario().getCorreo()).orElse(null);
+            ProyectoEntidad proyectoEntidad = proyectosRepositorio.findById(actividadEntidad.getProyecto().getNombre()).orElse(null);
+            CategoriaEntidad categoriaEntidad = categoriasRepositorio.findById(actividadEntidad.getCategoria().getNombre()).orElse(null);
+            actividadEntidad.setEstudiante(estudianteEntidad);
+            actividadEntidad.setProyecto(proyectoEntidad);
+            actividadEntidad.setCategoria(categoriaEntidad);
             actividadesRepositorio.save(actividadEntidad);
         } catch (Exception e){
             e.printStackTrace();
@@ -53,9 +60,8 @@ public class ActividadServicioImpl implements ActividadServicio{
         return null;
     }
 
-    public ArrayList<ActividadEntidad> consultarActividadPorEstudiante(String correoEstudiante, Integer pagina, Integer limite){
+    public ArrayList<ActividadEntidad> consultarActividadPorEstudiante(String correoEstudiante){
         ArrayList<ActividadEntidad> actividadEntidadArrayList = actividadesRepositorio.findByEstudiante(EstudianteEntidad.builder().correoUsuario(correoEstudiante).build());
-//        ArrayList<ActividadEntidad> actividadEntidadArrayList = actividadesRepositorio.findByActividadEntidadPKCorreoEstudiante(correoEstudiante);
         return actividadEntidadArrayList;
     }
 }

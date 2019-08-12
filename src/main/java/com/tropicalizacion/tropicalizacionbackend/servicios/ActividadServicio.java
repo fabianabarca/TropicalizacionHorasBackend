@@ -16,5 +16,5 @@ public interface ActividadServicio {
 
     Page<ActividadEntidad> getActividades(Integer pagina, Integer limite);
 
-    ArrayList<ActividadEntidad> consultarActividadPorEstudiante(String correoEstudiante, Integer pagina, Integer limite);
+    ArrayList<ActividadEntidad> consultarActividadPorEstudiante(String correoEstudiante);
 }
