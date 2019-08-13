@@ -43,4 +43,18 @@ public class ActividadControlador {
         });
         return new ResponseEntity<>(new CustomResponse(actividadDtoArrayList), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CustomResponse> eliminarActividad(@PathVariable Integer id) {
+        ActividadEntidad actividadEntidad = actividadServicio.consultarActividadPorId(id);
+        if (actividadEntidad == null) {
+            return new ResponseEntity<>(new CustomResponse(""), HttpStatus.NOT_FOUND);
+        }
+        try {
+            actividadServicio.borrarActividad(actividadEntidad);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

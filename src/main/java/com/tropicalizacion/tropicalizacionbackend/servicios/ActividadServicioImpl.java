@@ -49,7 +49,7 @@ public class ActividadServicioImpl implements ActividadServicio{
     }
 
     public void borrarActividad(ActividadEntidad actividadEntidad){
-
+        actividadesRepositorio.delete(actividadEntidad);
     }
 
     public void modificarActividad(ActividadEntidad actividadEntidad){
@@ -63,5 +63,9 @@ public class ActividadServicioImpl implements ActividadServicio{
     public ArrayList<ActividadEntidad> consultarActividadPorEstudiante(String correoEstudiante){
         ArrayList<ActividadEntidad> actividadEntidadArrayList = actividadesRepositorio.findByEstudiante(EstudianteEntidad.builder().correoUsuario(correoEstudiante).build());
         return actividadEntidadArrayList;
+    }
+
+    public ActividadEntidad consultarActividadPorId(Integer id){
+        return actividadesRepositorio.findById(id).orElse(null);
     }
 }
