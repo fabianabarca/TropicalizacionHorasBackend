@@ -14,7 +14,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ActividadDto {
-    private int actividadIdGenerado;
+    private int idGenerado;
     private Date fecha;
     private int horas;
     private String estado;
