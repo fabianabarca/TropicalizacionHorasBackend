@@ -1,7 +1,6 @@
 package com.tropicalizacion.tropicalizacionbackend.controladores;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.CustomResponse;
-import com.tropicalizacion.tropicalizacionbackend.entidades.UploadFileResponse;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ActividadEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.ActividadDto;
 import com.tropicalizacion.tropicalizacionbackend.servicios.ActividadServicioImpl;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -52,10 +50,11 @@ public class ActividadControlador {
     }
 
     @PostMapping
-    public ResponseEntity<CustomResponse> agregarActividad(@RequestBody ActividadDto actividadDto){
+    public ResponseEntity<CustomResponse> agregarActividad(@RequestBody ActividadDto actividadDto,
+                                                           @RequestParam(value = "files", required = false) MultipartFile[] files){
         ActividadEntidad actividadEntidad = modelMapper.map(actividadDto, ActividadEntidad.class);
-        actividadServicio.agregarActividad(actividadEntidad);
-        return new ResponseEntity<>(new CustomResponse(""), HttpStatus.OK);
+        final ActividadEntidad actividadGuardada = actividadServicio.agregarActividad(actividadEntidad);
+        return new ResponseEntity<>(new CustomResponse("", "", actividadGuardada.getIdGenerado()), HttpStatus.OK);
     }
 
     @GetMapping
@@ -76,47 +75,38 @@ public class ActividadControlador {
             return new ResponseEntity<>(new CustomResponse(""), HttpStatus.NOT_FOUND);
         }
         try {
+            archivosServicio.borrarArchivos(actividadEntidad.getIdGenerado());
             actividadServicio.borrarActividad(actividadEntidad);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok(new CustomResponse("Actividad borrada", ""));
     }
 
-    @PostMapping("/subirArchivos")
-    public List<UploadFileResponse> subirArchivos(@RequestParam("files") MultipartFile[] files) {
+    @PostMapping("/archivo/{idActividad}")
+    public List<CustomResponse> subirArchivos(@PathVariable int idActividad, @RequestParam("files") MultipartFile[] files) {
         return Arrays.stream(files)
-                .map(this::uploadFile)
+                .map(file -> this.archivosServicio.guardarArchivo(file, idActividad))
+                .map(fileResponse -> new CustomResponse("","", fileResponse))
                 .collect(Collectors.toList());
     }
 
-    private UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
-        String fileName = this.archivosServicio.guardarArchivo(file);
-
-        String fileDownloadUri = ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .path("/actividad/descargarArchivo/")
-                .path(fileName)
-                .toUriString();
-
-        return new UploadFileResponse(fileName, fileDownloadUri,
-                file.getContentType(), file.getSize());
+    @GetMapping("/archivo/{idActividad}")
+    public ResponseEntity<CustomResponse> obtenerURIsActividad(@PathVariable int idActividad) {
+        List<String> URIs = this.archivosServicio.obtenerURIsActividad(idActividad);
+        return ResponseEntity.ok(new CustomResponse("","", URIs));
     }
 
-    @GetMapping("/descargarArchivo/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
-        // Load file as Resource
-        Resource resource = this.archivosServicio.cargarArchivoComoResource(fileName);
+    @GetMapping("/archivo/{idActividad}/{fileName:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable int idActividad, @PathVariable String fileName, HttpServletRequest request) {
+        Resource resource = this.archivosServicio.cargarArchivoComoResource(fileName, idActividad);
 
-        // Try to determine file's content type
         String contentType = null;
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
         } catch (IOException ex) {
-            this.logger.info("No se logrö determinar el tipo del archivo " + fileName);
+            this.logger.info("No se logró determinar el tipo del archivo " + fileName);
         }
-
-        // Fallback to the default content type if type could not be determined
         if(contentType == null) {
             contentType = "application/octet-stream";
         }

@@ -34,18 +34,14 @@ public class ActividadServicioImpl implements ActividadServicio{
         this.proyectosRepositorio = proyectosRepositorio;
     }
 
-    public void agregarActividad(ActividadEntidad actividadEntidad){
-        try{
-            EstudianteEntidad estudianteEntidad = estudiantesRepositorio.findById(actividadEntidad.getEstudiante().getUsuario().getCorreo()).orElse(null);
-            ProyectoEntidad proyectoEntidad = proyectosRepositorio.findById(actividadEntidad.getProyecto().getNombre()).orElse(null);
-            CategoriaEntidad categoriaEntidad = categoriasRepositorio.findById(actividadEntidad.getCategoria().getNombre()).orElse(null);
-            actividadEntidad.setEstudiante(estudianteEntidad);
-            actividadEntidad.setProyecto(proyectoEntidad);
-            actividadEntidad.setCategoria(categoriaEntidad);
-            actividadesRepositorio.save(actividadEntidad);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+    public ActividadEntidad agregarActividad(ActividadEntidad actividadEntidad){
+        EstudianteEntidad estudianteEntidad = estudiantesRepositorio.findById(actividadEntidad.getEstudiante().getUsuario().getCorreo()).orElse(null);
+        ProyectoEntidad proyectoEntidad = proyectosRepositorio.findById(actividadEntidad.getProyecto().getNombre()).orElse(null);
+        CategoriaEntidad categoriaEntidad = categoriasRepositorio.findById(actividadEntidad.getCategoria().getNombre()).orElse(null);
+        actividadEntidad.setEstudiante(estudianteEntidad);
+        actividadEntidad.setProyecto(proyectoEntidad);
+        actividadEntidad.setCategoria(categoriaEntidad);
+        return actividadesRepositorio.save(actividadEntidad);
     }
 
     public void borrarActividad(ActividadEntidad actividadEntidad){

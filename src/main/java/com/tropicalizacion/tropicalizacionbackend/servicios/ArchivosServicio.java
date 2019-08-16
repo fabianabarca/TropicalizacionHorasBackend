@@ -1,10 +1,17 @@
 package com.tropicalizacion.tropicalizacionbackend.servicios;
 
+import com.tropicalizacion.tropicalizacionbackend.entidades.UploadFileResponse;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface ArchivosServicio {
-    String guardarArchivo(MultipartFile file);
+import java.util.List;
 
-    Resource cargarArchivoComoResource(String fileName);
+public interface ArchivosServicio {
+    UploadFileResponse guardarArchivo(MultipartFile file, int idActividad);
+
+    Resource cargarArchivoComoResource(String fileName, int idActividad);
+
+    List<String> obtenerURIsActividad(int idActividad);
+
+    void borrarArchivos(int idActividad);
 }

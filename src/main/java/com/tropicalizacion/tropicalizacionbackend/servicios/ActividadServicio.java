@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public interface ActividadServicio {
 
-    void agregarActividad(ActividadEntidad actividadEntidad);
+    ActividadEntidad agregarActividad(ActividadEntidad actividadEntidad);
 
     void borrarActividad(ActividadEntidad actividadEntidad);
 
