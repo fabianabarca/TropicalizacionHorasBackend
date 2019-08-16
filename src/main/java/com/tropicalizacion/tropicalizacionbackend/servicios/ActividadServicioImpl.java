@@ -4,12 +4,14 @@ import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ActividadEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.CategoriaEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ProyectoEntidad;
+import com.tropicalizacion.tropicalizacionbackend.excepciones.NoEncontradoExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.ActividadesRepositorio;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.CategoriasRepositorio;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.EstudiantesRepositorio;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.ProyectosRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -48,8 +50,17 @@ public class ActividadServicioImpl implements ActividadServicio{
         }
     }
 
-    public void borrarActividad(ActividadEntidad actividadEntidad){
-        actividadesRepositorio.delete(actividadEntidad);
+    public void borrarActividad(Integer id){
+        ActividadEntidad actividadEntidad = actividadesRepositorio.findById(id).orElse(null);
+        if (actividadEntidad == null){
+            throw new NoEncontradoExcepcion("", HttpStatus.NOT_FOUND, System.currentTimeMillis());
+        }
+        try {
+            actividadesRepositorio.delete(actividadEntidad);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     public void modificarActividad(ActividadEntidad actividadEntidad){

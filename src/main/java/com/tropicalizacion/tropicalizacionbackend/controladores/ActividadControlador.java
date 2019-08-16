@@ -3,6 +3,7 @@ package com.tropicalizacion.tropicalizacionbackend.controladores;
 import com.tropicalizacion.tropicalizacionbackend.entidades.CustomResponse;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ActividadEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.ActividadDto;
+import com.tropicalizacion.tropicalizacionbackend.excepciones.NoEncontradoExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.servicios.ActividadServicioImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,15 +47,14 @@ public class ActividadControlador {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<CustomResponse> eliminarActividad(@PathVariable Integer id) {
-        ActividadEntidad actividadEntidad = actividadServicio.consultarActividadPorId(id);
-        if (actividadEntidad == null) {
-            return new ResponseEntity<>(new CustomResponse(""), HttpStatus.NOT_FOUND);
-        }
         try {
-            actividadServicio.borrarActividad(actividadEntidad);
-        } catch (Exception e) {
-            e.printStackTrace();
+            actividadServicio.borrarActividad(id);
+        } catch (NoEncontradoExcepcion e) {
+            return new ResponseEntity<CustomResponse>(new CustomResponse(e.getMessage()), e.getEstado());
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        catch (Exception e) {
+            return new ResponseEntity<CustomResponse>(new CustomResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(new CustomResponse(id), HttpStatus.OK);
     }
 }
