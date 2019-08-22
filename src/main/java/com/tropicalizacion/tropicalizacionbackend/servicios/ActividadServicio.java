@@ -10,7 +10,7 @@ public interface ActividadServicio {
 
     ActividadEntidad agregarActividad(ActividadEntidad actividadEntidad);
 
-    void borrarActividad(ActividadEntidad actividadEntidad);
+    void borrarActividad(Integer id);
 
     void modificarActividad(ActividadEntidad actividadEntidad);
 
