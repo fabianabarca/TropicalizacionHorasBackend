@@ -39,11 +39,17 @@ public class TokenRecuperacionServicioImpl implements  TokenRecuperacionServicio
                 .usuario(usuario)
                 .token(passwordEncoder.encode(tokenRecuperacion))
                 .build();
+
+        tokenRepositorio.findById(usuario.getCorreo())
+                .ifPresent(t -> tokenRepositorio.delete(t));
+        tokenRepositorio.delete(TokenRecuperacionEntidad.builder()
+                .usuario(usuario)
+                .build());
         tokenRepositorio.save(token);
 
         correosServicio.enviarCorreoGenerico(correo,
-                "Token para recuperar contraseña (Tropicalización de la tecnología)",
-                "Su token es " + tokenRecuperacion);
+                "Código para recuperar contraseña (Tropicalización de la tecnología)",
+                "Su código es " + tokenRecuperacion);
 
         return tokenRecuperacion;
     }
