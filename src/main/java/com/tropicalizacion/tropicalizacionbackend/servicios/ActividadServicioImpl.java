@@ -4,6 +4,7 @@ import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ActividadEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.CategoriaEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ProyectoEntidad;
+import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.ActividadDto;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.NoEncontradoExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.ActividadesRepositorio;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.CategoriasRepositorio;
@@ -73,6 +74,9 @@ public class ActividadServicioImpl implements ActividadServicio{
     }
 
     public ActividadEntidad consultarActividadPorId(Integer id){
-        return actividadesRepositorio.findById(id).orElse(null);
+        return actividadesRepositorio.findById(id).orElseThrow(() ->
+                new NoEncontradoExcepcion("No se encontró la actividad de id " + id,
+                        HttpStatus.NOT_FOUND,
+                        System.currentTimeMillis()));
     }
 }
