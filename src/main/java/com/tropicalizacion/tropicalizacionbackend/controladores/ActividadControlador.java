@@ -5,7 +5,7 @@ import com.tropicalizacion.tropicalizacionbackend.entidades.CustomResponse;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ActividadEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.ActividadDto;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.NoEncontradoExcepcion;
-import com.tropicalizacion.tropicalizacionbackend.servicios.ActividadServicioImpl;
+import com.tropicalizacion.tropicalizacionbackend.servicios.ActividadServicio;
 import com.tropicalizacion.tropicalizacionbackend.servicios.ArchivosServicio;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -39,13 +39,13 @@ import java.util.stream.Collectors;
 @RestController
 public class ActividadControlador {
 
-    private ActividadServicioImpl actividadServicio;
+    private ActividadServicio actividadServicio;
     private ModelMapper modelMapper;
     private ArchivosServicio archivosServicio;
     private Logger logger = LoggerFactory.getLogger(ActividadControlador.class);
 
     @Autowired
-    public ActividadControlador(ActividadServicioImpl actividadServicio, ModelMapper modelMapper, ArchivosServicio archivosServicio){
+    public ActividadControlador(ActividadServicio actividadServicio, ModelMapper modelMapper, ArchivosServicio archivosServicio){
         this.actividadServicio = actividadServicio;
         this.modelMapper = modelMapper;
         this.archivosServicio = archivosServicio;
