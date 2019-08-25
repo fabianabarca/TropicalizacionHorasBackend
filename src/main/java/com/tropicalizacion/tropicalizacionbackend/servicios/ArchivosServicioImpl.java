@@ -1,5 +1,6 @@
 package com.tropicalizacion.tropicalizacionbackend.servicios;
 
+import com.tropicalizacion.tropicalizacionbackend.entidades.ArchivoEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.UploadFileResponse;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.ActividadNoExiste;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.AlmacenamientoExcepcion;
@@ -127,5 +128,23 @@ public class ArchivosServicioImpl implements ArchivosServicio {
         } catch (IOException e) {
             throw new AlmacenamientoExcepcion("Error al borrar los archivos de la actividad " + idActividad, HttpStatus.INTERNAL_SERVER_ERROR, System.currentTimeMillis());
         }
+    }
+
+    @Override
+    public List<ArchivoEntidad> crearArchivoEntidades(List<String> urIs) {
+        return urIs.stream()
+                .map(this::crearArchivoEntidad)
+                .collect(Collectors.toList());
+    }
+
+    private ArchivoEntidad crearArchivoEntidad(String uri) {
+        String[] split = uri.split("\\.");
+        String extension = split[split.length - 1];
+        return new ArchivoEntidad(uri, this.esImagen(extension));
+    }
+
+    private boolean esImagen(String extension) {
+        String[] imageExtensions = {"jpg", "jpeg", "png", "tiff", "bmp"};
+        return Arrays.asList(imageExtensions).contains(extension);
     }
 }
