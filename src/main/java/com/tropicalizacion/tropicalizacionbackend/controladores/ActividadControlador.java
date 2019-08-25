@@ -69,6 +69,19 @@ public class ActividadControlador {
         return new ResponseEntity<>(new CustomResponse(actividadDtoArrayList), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<CustomResponse> getActividad(@PathVariable Integer id) {
+        try {
+            final ActividadEntidad actividadEntidad = actividadServicio.consultarActividadPorId(id);
+            final ActividadDto actividadDto = modelMapper.map(actividadEntidad, ActividadDto.class);
+            return new ResponseEntity<>(new CustomResponse(actividadDto), HttpStatus.OK);
+        } catch (NoEncontradoExcepcion e){
+            return new ResponseEntity<CustomResponse>(new CustomResponse(e.getMessage()), e.getEstado());
+        } catch (Exception e) {
+            return new ResponseEntity<CustomResponse>(new CustomResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<CustomResponse> eliminarActividad(@PathVariable Integer id) {
         try {
