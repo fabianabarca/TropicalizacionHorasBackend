@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 import static javax.persistence.GenerationType.IDENTITY;
-import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @Table(name = "actividad")
@@ -42,18 +41,15 @@ public class ActividadEntidad {
     private String justificacionRechazo;
 
     @ManyToOne
-//    @JoinColumn(name = "fk_correo_estudiante")
     @JoinColumn(name = "fk_correo_estudiante", referencedColumnName = "pk_correo_usuario")
     private EstudianteEntidad estudiante;
 
     @ManyToOne
-//    @JoinColumn(name = "fk_nombre_categoria")
     @JoinColumn(name = "fk_nombre_categoria", referencedColumnName = "pk_nombre")
     @NotNull
     private CategoriaEntidad categoria;
 
     @ManyToOne
-//    @JoinColumn(name = "fk_nombre_proyecto")
     @JoinColumn(name = "fk_nombre_proyecto", referencedColumnName = "pk_nombre")
     @NotNull
     private ProyectoEntidad proyecto;
@@ -61,5 +57,16 @@ public class ActividadEntidad {
     @ManyToOne
     @JoinColumn(name = "fk_correo_revisor", referencedColumnName = "pk_correo_usuario")
     private RevisorEntidad revisor;
+
+    public void setValues(ActividadEntidad actividadEntidad){
+        this.categoria = actividadEntidad.categoria;
+        this.detalles = actividadEntidad.detalles;
+        this.proyecto = actividadEntidad.proyecto;
+        this.fecha = actividadEntidad.fecha;
+        this.horas = actividadEntidad.horas;
+        this.estado = actividadEntidad.estado;
+        this.estudiante = actividadEntidad.estudiante;
+        this.justificacionRechazo = actividadEntidad.justificacionRechazo;
+    }
 }
 

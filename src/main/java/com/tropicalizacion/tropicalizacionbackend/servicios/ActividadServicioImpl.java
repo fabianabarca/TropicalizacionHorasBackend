@@ -4,7 +4,6 @@ import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ActividadEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.CategoriaEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ProyectoEntidad;
-import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.ActividadDto;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.NoEncontradoExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.ActividadesRepositorio;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.CategoriasRepositorio;
@@ -60,8 +59,21 @@ public class ActividadServicioImpl implements ActividadServicio{
         }
     }
 
-    public void modificarActividad(ActividadEntidad actividadEntidad){
-
+    public void modificarActividad(Integer id, ActividadEntidad actividadEntidad){
+        ActividadEntidad actividad = actividadesRepositorio.findById(id).orElseThrow(() ->
+                new NoEncontradoExcepcion("No se encontró la actividad de id " + id,
+                        HttpStatus.NOT_FOUND,
+                        System.currentTimeMillis()));;
+        actividad.setValues(actividadEntidad);
+        EstudianteEntidad estudianteEntidad = estudiantesRepositorio
+                .findById(actividadEntidad.getEstudiante().getUsuario().getCorreo())
+                .orElseThrow(() ->
+                        new NoEncontradoExcepcion("No se encontró el estudiante de la actividad" + id
+                                + "con el correo" + actividadEntidad.getEstudiante().getUsuario().getCorreo(),
+                                HttpStatus.NOT_FOUND,
+                                System.currentTimeMillis()));
+        actividad.setEstudiante(estudianteEntidad);
+        actividadesRepositorio.save(actividad);
     }
 
     public Page<ActividadEntidad> getActividades(Integer pagina, Integer limite){

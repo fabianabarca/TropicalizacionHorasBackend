@@ -12,7 +12,7 @@ public interface ActividadServicio {
 
     void borrarActividad(Integer id);
 
-    void modificarActividad(ActividadEntidad actividadEntidad);
+    void modificarActividad(Integer id, ActividadEntidad actividadEntidad);
 
     Page<ActividadEntidad> getActividades(Integer pagina, Integer limite);
 
