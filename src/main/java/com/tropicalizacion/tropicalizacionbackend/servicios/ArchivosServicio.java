@@ -14,7 +14,11 @@ public interface ArchivosServicio {
 
     List<String> obtenerURIsActividad(int idActividad);
 
+    // Borra todos los archivos de una actividad
     void borrarArchivos(int idActividad);
+
+    // Borra solo los archivos del array
+    void borrarArchivos(int idActividad, String[] archivos);
 
     List<ArchivoEntidad> crearArchivoEntidades(List<String> urIs);
 }

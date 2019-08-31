@@ -4,7 +4,6 @@ import com.tropicalizacion.tropicalizacionbackend.entidades.ArchivoEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.CustomResponse;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ActividadEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.ActividadDto;
-import com.tropicalizacion.tropicalizacionbackend.excepciones.ArchivoNoEncontradoExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.NoEncontradoExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.servicios.ActividadServicio;
 import com.tropicalizacion.tropicalizacionbackend.servicios.ArchivosServicio;
@@ -17,7 +16,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -110,16 +118,12 @@ public class ActividadControlador {
 
     @GetMapping("/archivo/{idActividad}")
     public ResponseEntity<CustomResponse> obtenerURIsActividad(@PathVariable int idActividad) {
-        try {
             List<String> URIs = this.archivosServicio.obtenerURIsActividad(idActividad);
             List<ArchivoEntidad> archivos = new ArrayList<>();
             if (URIs != null){
                 archivos = this.archivosServicio.crearArchivoEntidades(URIs);
             }
             return ResponseEntity.ok(new CustomResponse("","", archivos));
-        } catch (Exception e){
-            return new ResponseEntity(new CustomResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     @GetMapping("/archivo/{idActividad}/{fileName:.+}")
@@ -140,5 +144,11 @@ public class ActividadControlador {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
+    }
+
+    @DeleteMapping("/archivo/{idActividad}")
+    public ResponseEntity<CustomResponse> deleteFiles(@PathVariable int idActividad, @RequestBody String[] archivos) {
+        this.archivosServicio.borrarArchivos(idActividad, archivos);
+        return ResponseEntity.ok(new CustomResponse("Archivos borrados exitósamente", "", null));
     }
 }

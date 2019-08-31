@@ -25,6 +25,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +34,7 @@ public class ArchivosServicioImpl implements ArchivosServicio {
     private ActividadServicio actividadServicio;
 
     @Autowired
-    public ArchivosServicioImpl(@Value("${file.upload-dir}") String uploadPath, ActividadServicio actividadServicio) {
+    public ArchivosServicioImpl(@Value("${file.upload-dir}") String uploadPath, ActividadServicio actividadServicio) throws AlmacenamientoExcepcion {
         this.fileStorageLocation = Paths.get(uploadPath)
                 .toAbsolutePath().normalize();
         this.actividadServicio = actividadServicio;
@@ -46,7 +47,7 @@ public class ArchivosServicioImpl implements ArchivosServicio {
     }
 
     @Override
-    public UploadFileResponse guardarArchivo(MultipartFile file, int idActividad) {
+    public UploadFileResponse guardarArchivo(MultipartFile file, int idActividad) throws ActividadNoExiste, AlmacenamientoExcepcion{
         if (this.actividadServicio.consultarActividadPorId(idActividad) == null)
             throw new ActividadNoExiste("No existe actividad con el id " + idActividad, HttpStatus.NOT_FOUND, System.currentTimeMillis());
 
@@ -82,7 +83,7 @@ public class ArchivosServicioImpl implements ArchivosServicio {
     }
 
     @Override
-    public List<String> obtenerURIsActividad(int idActividad) {
+    public List<String> obtenerURIsActividad(int idActividad) throws ActividadNoExiste {
         Path actividadPath = this.fileStorageLocation.resolve(String.valueOf(idActividad));
         if(!Files.exists(actividadPath))
             return null;
@@ -100,7 +101,7 @@ public class ArchivosServicioImpl implements ArchivosServicio {
     }
 
     @Override
-    public Resource cargarArchivoComoResource(String fileName, int idActividad) {
+    public Resource cargarArchivoComoResource(String fileName, int idActividad) throws ArchivoNoEncontradoExcepcion {
         try {
             Path filePath = this.fileStorageLocation.resolve(idActividad + "/" + fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
@@ -115,18 +116,55 @@ public class ArchivosServicioImpl implements ArchivosServicio {
     }
 
     @Override
-    public void borrarArchivos(int idActividad) {
-        Path actividadPath = this.fileStorageLocation.resolve(String.valueOf(idActividad));
-        if(!Files.exists(actividadPath))
+    public void borrarArchivos(int idActividad) throws ActividadNoExiste, ArchivoNoEncontradoExcepcion, AlmacenamientoExcepcion {
+        Path actividadPath = this.borradoPosible(idActividad);
+        if (actividadPath == null)
             return;
-
-        if (this.actividadServicio.consultarActividadPorId(idActividad) == null)
-            throw new ActividadNoExiste("No existe actividad con el id " + idActividad, HttpStatus.NOT_FOUND, System.currentTimeMillis());
 
         try {
             FileUtils.forceDelete(new File(actividadPath.toString()));
         } catch (IOException e) {
             throw new AlmacenamientoExcepcion("Error al borrar los archivos de la actividad " + idActividad, HttpStatus.INTERNAL_SERVER_ERROR, System.currentTimeMillis());
+        }
+    }
+
+    private Path borradoPosible(int idActividad) throws ActividadNoExiste{
+        if (this.actividadServicio.consultarActividadPorId(idActividad) == null)
+            throw new ActividadNoExiste("No existe actividad con el id " + idActividad, HttpStatus.NOT_FOUND, System.currentTimeMillis());
+
+        // No hay archivos asociados a la actividad
+        Path actividadPath = this.fileStorageLocation.resolve(String.valueOf(idActividad));
+        if(!Files.exists(actividadPath))
+            return null;
+        else
+            return actividadPath;
+    }
+
+    @Override
+    public void borrarArchivos(final int idActividad, String[] archivos) throws ActividadNoExiste, ArchivoNoEncontradoExcepcion, AlmacenamientoExcepcion {
+        Path actividadFolder = this.borradoPosible(idActividad);
+        if (actividadFolder == null)
+            return;
+
+        Arrays.stream(archivos)
+                .forEach(archivo -> this.borrarArchivo(idActividad, archivo));
+
+        File fileFolder = actividadFolder.toFile();
+        if (fileFolder.isDirectory() &&  Objects.requireNonNull(actividadFolder.toFile().list()).length == 0)
+            if (!actividadFolder.toFile().delete())
+                throw new AlmacenamientoExcepcion("Error al borrar la carpeta de la actividad " + idActividad, HttpStatus.INTERNAL_SERVER_ERROR, System.currentTimeMillis());
+    }
+
+    private void borrarArchivo(int idActividad, String nombre) throws ArchivoNoEncontradoExcepcion, AlmacenamientoExcepcion{
+        Path filePath = this.fileStorageLocation.resolve(idActividad + "/" + nombre).normalize();
+        if(!Files.exists(filePath)) {
+            throw new ArchivoNoEncontradoExcepcion("Archivo no encontrado " + nombre, HttpStatus.NOT_FOUND, System.currentTimeMillis());
+        } else {
+            try {
+                Files.delete(filePath);
+            } catch (IOException e) {
+                throw new AlmacenamientoExcepcion("Error al borrar el archivo " + nombre, HttpStatus.INTERNAL_SERVER_ERROR, System.currentTimeMillis());
+            }
         }
     }
 
