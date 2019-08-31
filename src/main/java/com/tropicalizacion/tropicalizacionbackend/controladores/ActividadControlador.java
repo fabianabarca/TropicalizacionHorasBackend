@@ -79,7 +79,7 @@ public class ActividadControlador {
         } catch (NoEncontradoExcepcion e){
             return new ResponseEntity<CustomResponse>(new CustomResponse(e.getMessage()), e.getEstado());
         } catch (Exception e) {
-            return new ResponseEntity<CustomResponse>(new CustomResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new CustomResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -118,18 +118,13 @@ public class ActividadControlador {
 
     @GetMapping("/archivo/{idActividad}")
     public ResponseEntity<CustomResponse> obtenerURIsActividad(@PathVariable int idActividad) {
-            List<String> URIs = this.archivosServicio.obtenerURIsActividad(idActividad);
-            List<ArchivoEntidad> archivos = new ArrayList<>();
-            if (URIs != null){
-                archivos = this.archivosServicio.crearArchivoEntidades(URIs);
-            }
+            List<ArchivoEntidad> archivos = this.archivosServicio.obtenerArchivos(idActividad);
             return ResponseEntity.ok(new CustomResponse("","", archivos));
     }
 
     @GetMapping("/archivo/{idActividad}/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable int idActividad, @PathVariable String fileName, HttpServletRequest request) {
         Resource resource = this.archivosServicio.cargarArchivoComoResource(fileName, idActividad);
-
         String contentType = null;
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());

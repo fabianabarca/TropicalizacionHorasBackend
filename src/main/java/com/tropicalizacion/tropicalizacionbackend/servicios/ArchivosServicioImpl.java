@@ -65,8 +65,6 @@ public class ArchivosServicioImpl implements ArchivosServicio {
             }
             Files.copy(file.getInputStream(), targetLocation.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
 
-
-
             return new UploadFileResponse(fileName, this.createURI(fileName, idActividad),
                     file.getContentType(), file.getSize());
         } catch (IOException ex) {
@@ -83,7 +81,7 @@ public class ArchivosServicioImpl implements ArchivosServicio {
     }
 
     @Override
-    public List<String> obtenerURIsActividad(int idActividad) throws ActividadNoExiste {
+    public List<ArchivoEntidad> obtenerArchivos(int idActividad) throws ActividadNoExiste {
         Path actividadPath = this.fileStorageLocation.resolve(String.valueOf(idActividad));
         if(!Files.exists(actividadPath))
             return null;
@@ -96,7 +94,7 @@ public class ArchivosServicioImpl implements ArchivosServicio {
         assert listOfFiles != null;
         return Arrays.stream(listOfFiles)
                 .map(File::getName)
-                .map(fileName -> this.createURI(fileName, idActividad))
+                .map(fileName -> this.crearArchivoEntidad(fileName, idActividad))
                 .collect(Collectors.toList());
     }
 
@@ -168,17 +166,11 @@ public class ArchivosServicioImpl implements ArchivosServicio {
         }
     }
 
-    @Override
-    public List<ArchivoEntidad> crearArchivoEntidades(List<String> urIs) {
-        return urIs.stream()
-                .map(this::crearArchivoEntidad)
-                .collect(Collectors.toList());
-    }
-
-    private ArchivoEntidad crearArchivoEntidad(String uri) {
+    private ArchivoEntidad crearArchivoEntidad(String fileName, Integer idActividad) {
+        String uri = this.createURI(fileName, idActividad);
         String[] split = uri.split("\\.");
         String extension = split[split.length - 1];
-        return new ArchivoEntidad(uri, this.esImagen(extension));
+        return new ArchivoEntidad(fileName, uri, this.esImagen(extension));
     }
 
     private boolean esImagen(String extension) {

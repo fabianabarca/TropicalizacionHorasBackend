@@ -8,6 +8,7 @@ import lombok.Setter;
 
 @Setter @Getter @NoArgsConstructor @AllArgsConstructor @Builder
 public class ArchivoEntidad {
+    private String nombre;
     private String URI;
     private boolean isImage;
 }
