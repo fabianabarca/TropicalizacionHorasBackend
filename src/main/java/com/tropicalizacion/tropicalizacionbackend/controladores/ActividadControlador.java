@@ -1,6 +1,6 @@
 package com.tropicalizacion.tropicalizacionbackend.controladores;
 
-import com.tropicalizacion.tropicalizacionbackend.entidades.ArchivoEntidad;
+import com.tropicalizacion.tropicalizacionbackend.entidades.ArchivoModelo;
 import com.tropicalizacion.tropicalizacionbackend.entidades.CustomResponse;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ActividadEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.ActividadDto;
@@ -107,7 +107,7 @@ public class ActividadControlador {
     @GetMapping("/archivo/{idActividad}")
     public ResponseEntity<CustomResponse> obtenerURIsActividad(@PathVariable int idActividad) {
         List<String> URIs = this.archivosServicio.obtenerURIsActividad(idActividad);
-        List<ArchivoEntidad> archivos = this.archivosServicio.crearArchivoEntidades(URIs);
+        List<ArchivoModelo> archivos = this.archivosServicio.crearArchivoEntidades(URIs);
         return ResponseEntity.ok(new CustomResponse("","", archivos));
     }
 

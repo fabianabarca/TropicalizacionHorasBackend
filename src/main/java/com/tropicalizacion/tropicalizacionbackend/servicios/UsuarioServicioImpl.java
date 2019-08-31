@@ -51,6 +51,10 @@ public class UsuarioServicioImpl implements UsuarioServicio {
                         HttpStatus.NOT_FOUND,
                         System.currentTimeMillis()));
 
+        if (!usuario.getActivado()) {
+            usuario.setActivado(true);
+        }
+
         usuario.setContrasenna(passwordEncoder.encode(contrasennaNueva));
         usuariosRepositorio.save(usuario);
     }

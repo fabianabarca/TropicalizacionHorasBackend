@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter @Getter @NoArgsConstructor @AllArgsConstructor @Builder
-public class ArchivoEntidad {
-    private String URI;
-    private boolean isImage;
+public class UploadFileModelo {
+    private String fileName;
+    private String fileDownloadUri;
+    private String fileType;
+    private long size;
 }

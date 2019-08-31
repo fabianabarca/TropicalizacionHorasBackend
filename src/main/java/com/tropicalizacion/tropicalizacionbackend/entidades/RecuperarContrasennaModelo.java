@@ -10,7 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Setter @Getter @Builder @NoArgsConstructor @AllArgsConstructor
-public class RecuperarContrasenna {
+public class RecuperarContrasennaModelo {
     @Email
     @NotBlank
     private String correo;
