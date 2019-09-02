@@ -26,7 +26,7 @@ public class ProyectoEntidad {
     @Column(name = "descripcion", columnDefinition = "MEDIUMTEXT")
     private String descripcion;
 
-    @Column(name = "habilitado")
+    @Column(name = "borrado")
     private boolean habilitado;
 
     @ManyToMany(mappedBy = "proyectos")

@@ -56,6 +56,7 @@ public class JwtTokenProvider {
         claims.put("apellidos", usuario.getApellidos());
         claims.put("telefono", usuario.getTelefono());
         claims.put("rol", rol);
+        claims.put("activado", usuario.getActivado());
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
