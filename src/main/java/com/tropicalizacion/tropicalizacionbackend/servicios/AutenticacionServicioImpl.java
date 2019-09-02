@@ -43,7 +43,7 @@ public class AutenticacionServicioImpl implements AutenticacionServicio {
             return jwtTokenProvider.createToken(usuarioEntidad, rol);
         }
         catch(AuthenticationException e) {
-            throw new MalasCredencialesExcepcion("", HttpStatus.UNAUTHORIZED, System.currentTimeMillis());
+            throw new MalasCredencialesExcepcion("Correo y/o contraseña invalido(s)", HttpStatus.UNAUTHORIZED, System.currentTimeMillis());
         }
     }
 

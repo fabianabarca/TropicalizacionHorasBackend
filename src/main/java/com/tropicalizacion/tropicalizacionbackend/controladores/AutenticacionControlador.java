@@ -5,7 +5,7 @@ import com.tropicalizacion.tropicalizacionbackend.entidades.CambiarContrasennaMo
 import com.tropicalizacion.tropicalizacionbackend.entidades.CustomResponse;
 import com.tropicalizacion.tropicalizacionbackend.entidades.RecuperarContrasennaModelo;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.JwtInvalidoExcepcion;
-import com.tropicalizacion.tropicalizacionbackend.excepciones.MalasCredencialesExcepcion;
+import com.tropicalizacion.tropicalizacionbackend.excepciones.TokenNoValidoExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.servicios.AutenticacionServicio;
 import com.tropicalizacion.tropicalizacionbackend.servicios.TokenRecuperacionServicio;
 import com.tropicalizacion.tropicalizacionbackend.servicios.UsuarioServicio;
@@ -35,9 +35,9 @@ import static org.springframework.http.ResponseEntity.ok;
 @RestController
 @RequestMapping(value = "/autenticar")
 public class AutenticacionControlador {
-     private final AutenticacionServicio autenticacionServicio;
-     private final TokenRecuperacionServicio tokenRecuperacionServicio;
-     private final UsuarioServicio usuarioServicio;
+    private final AutenticacionServicio autenticacionServicio;
+    private final TokenRecuperacionServicio tokenRecuperacionServicio;
+    private final UsuarioServicio usuarioServicio;
 
     @Autowired
     public AutenticacionControlador(AutenticacionServicio autenticacionServicio, TokenRecuperacionServicio tokenRecuperacionServicio, UsuarioServicio usuarioServicio) {
@@ -55,12 +55,8 @@ public class AutenticacionControlador {
      */
     @PostMapping("/sign-in")
     public ResponseEntity<CustomResponse> signIn(@Valid @RequestBody AutenticacionUsuarioModelo infoUsuario) throws MethodArgumentNotValidException {
-        try {
-            CustomResponse response = new CustomResponse((Object) autenticacionServicio.autenticarUsuario(infoUsuario.getCorreoUsuario(), infoUsuario.getContrasenna()));
-            return ok(response);
-        } catch (MalasCredencialesExcepcion e) {
-            throw new MalasCredencialesExcepcion("Correo o contraseña inválido", HttpStatus.UNAUTHORIZED, System.currentTimeMillis());
-        }
+        CustomResponse response = new CustomResponse((Object) autenticacionServicio.autenticarUsuario(infoUsuario.getCorreoUsuario(), infoUsuario.getContrasenna()));
+        return ok(response);
     }
 
     /**
@@ -109,12 +105,16 @@ public class AutenticacionControlador {
      * Permite cambiar la contraseña del usuario en caso de que ya estuviera loggeado
      *
      * @param usuario usuario loggeado
-     * @param info contraseña nueva que desea el usuario y la vieja para validar
+     * @param info    contraseña nueva que desea el usuario y la vieja para validar
      * @return ok si sale bien el proceso
      */
     @PutMapping("/cambiar-contrasenna")
     @PreAuthorize("isAuthenticated()")
     ResponseEntity<CustomResponse> cambiarContrasenna(@AuthenticationPrincipal Principal usuario, @RequestBody CambiarContrasennaModelo info) {
+        if (usuario == null) {
+            throw new TokenNoValidoExcepcion("No posee un token válido para realizar este cambio", HttpStatus.UNAUTHORIZED, System.currentTimeMillis());
+        }
+        autenticacionServicio.autenticarUsuario(usuario.getName(), info.getContraVieja());
         usuarioServicio.cambiarContrasenna(usuario.getName(), info.getContraNueva());
         return ok(new CustomResponse("Cambio exitoso", null, null));
     }
