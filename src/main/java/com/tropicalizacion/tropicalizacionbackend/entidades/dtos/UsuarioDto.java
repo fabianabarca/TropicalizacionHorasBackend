@@ -12,5 +12,5 @@ public class UsuarioDto {
     private String telefono;
     private String nombre;
     private String apellidos;
-    private boolean habilitado;
+    private boolean activado;
 }

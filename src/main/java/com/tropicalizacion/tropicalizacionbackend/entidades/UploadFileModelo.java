@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter @Getter @NoArgsConstructor @AllArgsConstructor @Builder
-public class UploadFileResponse {
+public class UploadFileModelo {
     private String fileName;
     private String fileDownloadUri;
     private String fileType;

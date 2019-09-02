@@ -38,9 +38,13 @@ public class UsuarioEntidad {
     @NotNull
     private String apellidos;
 
-    @Column(name = "habilitado")
+    @Column(name = "activado")
     @NotNull
-    private Boolean habilitado;
+    private Boolean activado;
+
+    @Column(name = "borrado")
+    @NotNull
+    private Boolean borrado;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private EstudianteEntidad estudiante;

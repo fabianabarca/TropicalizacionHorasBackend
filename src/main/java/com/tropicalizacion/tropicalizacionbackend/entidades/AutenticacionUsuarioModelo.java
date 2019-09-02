@@ -10,7 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Setter @Getter @Builder @AllArgsConstructor @NoArgsConstructor
-public class AutenticacionUsuario {
+public class AutenticacionUsuarioModelo {
     @NotBlank(message = "El campo de correo no puede estar vacío")
     @Email(message = "El correo digitado no está bien formado")
     private String correoUsuario;

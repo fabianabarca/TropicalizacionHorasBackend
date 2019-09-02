@@ -22,7 +22,7 @@ public class CategoriaEntidad {
     @Column(name = "pk_nombre", length = 40)
     private String nombre;
 
-    @Column(name = "habilitado")
+    @Column(name = "borrado")
     private boolean habilitado;
 
     @OneToMany(mappedBy = "categoria")

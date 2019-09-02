@@ -1,7 +1,7 @@
 package com.tropicalizacion.tropicalizacionbackend.servicios;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.ArchivoEntidad;
-import com.tropicalizacion.tropicalizacionbackend.entidades.UploadFileResponse;
+import com.tropicalizacion.tropicalizacionbackend.entidades.UploadFileModelo;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.ActividadNoExiste;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.AlmacenamientoExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.ArchivoNoEncontradoExcepcion;
@@ -47,7 +47,7 @@ public class ArchivosServicioImpl implements ArchivosServicio {
     }
 
     @Override
-    public UploadFileResponse guardarArchivo(MultipartFile file, int idActividad) throws ActividadNoExiste, AlmacenamientoExcepcion{
+    public UploadFileModelo guardarArchivo(MultipartFile file, int idActividad) throws ActividadNoExiste, AlmacenamientoExcepcion{
         if (this.actividadServicio.consultarActividadPorId(idActividad) == null)
             throw new ActividadNoExiste("No existe actividad con el id " + idActividad, HttpStatus.NOT_FOUND, System.currentTimeMillis());
 
@@ -65,7 +65,7 @@ public class ArchivosServicioImpl implements ArchivosServicio {
             }
             Files.copy(file.getInputStream(), targetLocation.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
 
-            return new UploadFileResponse(fileName, this.createURI(fileName, idActividad),
+            return new UploadFileModelo(fileName, this.createURI(fileName, idActividad),
                     file.getContentType(), file.getSize());
         } catch (IOException ex) {
             throw new AlmacenamientoExcepcion("No se logró almacenar el archivo: " + fileName, HttpStatus.INTERNAL_SERVER_ERROR, System.currentTimeMillis());

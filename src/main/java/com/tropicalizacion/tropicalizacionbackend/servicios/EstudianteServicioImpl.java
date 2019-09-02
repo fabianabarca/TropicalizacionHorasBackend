@@ -37,6 +37,7 @@ public class EstudianteServicioImpl implements EstudianteServicio {
         String contrasennaNueva = RandomStringUtils.random(10, true, true);
         String contasennaEncriptada = passwordEncoder.encode(contrasennaNueva);
         estudianteEntidad.getUsuario().setContrasenna(contasennaEncriptada);
+        estudianteEntidad.getUsuario().setActivado(false);
 
         UsuarioEntidad usuarioGuardado = usuariosRepositorio.save(estudianteEntidad.getUsuario());
         estudianteEntidad.setUsuario(usuarioGuardado);
