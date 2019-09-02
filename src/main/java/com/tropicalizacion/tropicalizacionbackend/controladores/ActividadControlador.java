@@ -55,8 +55,12 @@ public class ActividadControlador {
     @PostMapping
     public ResponseEntity<CustomResponse> agregarActividad(@RequestBody ActividadDto actividadDto){
         ActividadEntidad actividadEntidad = modelMapper.map(actividadDto, ActividadEntidad.class);
-        final ActividadEntidad actividadGuardada = actividadServicio.agregarActividad(actividadEntidad);
-        return new ResponseEntity<>(new CustomResponse("", "", actividadGuardada.getIdGenerado()), HttpStatus.OK);
+        try {
+            final ActividadEntidad actividadGuardada = actividadServicio.agregarActividad(actividadEntidad);
+            return new ResponseEntity<>(new CustomResponse("", "", actividadGuardada.getIdGenerado()), HttpStatus.OK);
+        } catch (NoEncontradoExcepcion e) {
+            return new ResponseEntity<>(new CustomResponse(e.getMessage()), HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping

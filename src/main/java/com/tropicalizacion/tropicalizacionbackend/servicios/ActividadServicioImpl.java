@@ -37,9 +37,21 @@ public class ActividadServicioImpl implements ActividadServicio{
     }
 
     public ActividadEntidad agregarActividad(ActividadEntidad actividadEntidad){
-        EstudianteEntidad estudianteEntidad = estudiantesRepositorio.findById(actividadEntidad.getEstudiante().getUsuario().getCorreo()).orElse(null);
-        ProyectoEntidad proyectoEntidad = proyectosRepositorio.findById(actividadEntidad.getProyecto().getNombre()).orElse(null);
-        CategoriaEntidad categoriaEntidad = categoriasRepositorio.findById(actividadEntidad.getCategoria().getNombre()).orElse(null);
+        EstudianteEntidad estudianteEntidad = estudiantesRepositorio.findById(actividadEntidad.getEstudiante().getUsuario().getCorreo())
+                .orElseThrow(() ->
+                        new NoEncontradoExcepcion("No se encontró el estudiante de correo: " + actividadEntidad.getEstudiante().getUsuario().getCorreo(),
+                                HttpStatus.NOT_FOUND,
+                                System.currentTimeMillis()));
+        ProyectoEntidad proyectoEntidad = proyectosRepositorio.findById(actividadEntidad.getProyecto().getNombre())
+                .orElseThrow(() ->
+                        new NoEncontradoExcepcion("No se encontró el proyecto de nombre: " + actividadEntidad.getProyecto().getNombre(),
+                                HttpStatus.NOT_FOUND,
+                                System.currentTimeMillis()));
+        CategoriaEntidad categoriaEntidad = categoriasRepositorio.findById(actividadEntidad.getCategoria().getNombre())
+                .orElseThrow(() ->
+                        new NoEncontradoExcepcion("No se encontró la categoría de nombre: " + actividadEntidad.getCategoria().getNombre(),
+                                HttpStatus.NOT_FOUND,
+                                System.currentTimeMillis()));
         actividadEntidad.setEstudiante(estudianteEntidad);
         actividadEntidad.setProyecto(proyectoEntidad);
         actividadEntidad.setCategoria(categoriaEntidad);
