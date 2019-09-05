@@ -27,7 +27,7 @@ public class ProyectoEntidad {
     private String descripcion;
 
     @Column(name = "borrado")
-    private boolean habilitado;
+    private boolean borrado;
 
     @ManyToMany(mappedBy = "proyectos")
     private Set<EstudianteEntidad> estudiantes = new HashSet<>();

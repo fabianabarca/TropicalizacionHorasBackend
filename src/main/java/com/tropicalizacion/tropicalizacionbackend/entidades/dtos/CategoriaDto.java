@@ -13,5 +13,4 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CategoriaDto {
     private String nombre;
-    private boolean habilitado;
 }

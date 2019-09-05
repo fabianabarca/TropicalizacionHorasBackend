@@ -14,5 +14,4 @@ import lombok.Setter;
 public class ProyectoDto {
     private String nombre;
     private String descripcion;
-    private boolean habilitado;
 }

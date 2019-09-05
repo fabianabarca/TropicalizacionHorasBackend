@@ -7,9 +7,7 @@ public interface CategoriaServicio {
 
     void agregarCategoria(CategoriaEntidad categoriaEntidad);
 
-    void borrarCategoria(CategoriaEntidad categoriaEntidad);
-
-    void modificarCategoria(CategoriaEntidad categoriaEntidad);
+    void borrarCategoria(String categoriaNombre);
 
     ArrayList<String> getCategoriasNombre();
 }

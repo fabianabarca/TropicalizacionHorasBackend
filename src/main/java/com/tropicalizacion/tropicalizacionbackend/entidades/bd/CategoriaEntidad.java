@@ -23,7 +23,7 @@ public class CategoriaEntidad {
     private String nombre;
 
     @Column(name = "borrado")
-    private boolean habilitado;
+    private boolean borrado;
 
     @OneToMany(mappedBy = "categoria")
     private Set<ActividadEntidad> actividades = new HashSet<>();
