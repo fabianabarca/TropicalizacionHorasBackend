@@ -3,12 +3,22 @@ package com.tropicalizacion.tropicalizacionbackend.servicios;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ProyectoEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.ActividadDto;
 import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.EstudianteDto;
+import com.tropicalizacion.tropicalizacionbackend.repositorios.ProyectosRepositorio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 // TODO implementar
 @Service
 public class ProyectoServicioImpl implements ProyectoServicio {
+    private ProyectosRepositorio proyectosRepositorio;
+
+    @Autowired
+    public ProyectoServicioImpl(ProyectosRepositorio proyectosRepositorio) {
+        this.proyectosRepositorio = proyectosRepositorio;
+    }
+
     @Override
     public void agregarProyecto(ProyectoEntidad proyectoEntidad) {
 
@@ -26,7 +36,7 @@ public class ProyectoServicioImpl implements ProyectoServicio {
 
     @Override
     public Page<ProyectoEntidad> getProyectos(Integer pagina, Integer limite) {
-        return null;
+        return this.proyectosRepositorio.findAll(PageRequest.of(pagina, limite));
     }
 
     @Override
