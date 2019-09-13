@@ -21,7 +21,7 @@ public class ProyectoServicioImpl implements ProyectoServicio {
 
     @Override
     public void agregarProyecto(ProyectoEntidad proyectoEntidad) {
-
+        this.proyectosRepositorio.save(proyectoEntidad);
     }
 
     @Override

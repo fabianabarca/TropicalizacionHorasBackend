@@ -22,15 +22,15 @@ INSERT INTO revisor (pk_correo_usuario, es_coordinador) VALUES
 ('fabian@coordinador.com', true);
 
 INSERT INTO categoria (pk_nombre, borrado) VALUES
-('Reunión', TRUE),
-('Trabajo', TRUE),
-('Gira', TRUE);
+('Reunión', FALSE),
+('Trabajo', FALSE),
+('Gira', FALSE);
 
 INSERT INTO proyecto (pk_nombre, descripcion, borrado) VALUES
-('Mapa de Osa', 'ProyectoEntidad para desarollar la aplicación del mapa de Osa', TRUE),
-('Ingreso a la U', 'ProyectoEntidad encargado de divulgar información sobre la UCR a comunidades de Osa', TRUE),
-('Factura electrónica', 'ProyectoEntidad encargado de informar a la comunidades de Osa sobre la factura electrónica', TRUE),
-('RRSS', 'Talleres de redes sociales para las comunidades y emprendimientos', TRUE);
+('Mapa de Osa', 'ProyectoEntidad para desarollar la aplicación del mapa de Osa', FALSE),
+('Ingreso a la U', 'ProyectoEntidad encargado de divulgar información sobre la UCR a comunidades de Osa', FALSE),
+('Factura electrónica', 'ProyectoEntidad encargado de informar a la comunidades de Osa sobre la factura electrónica', FALSE),
+('RRSS', 'Talleres de redes sociales para las comunidades y emprendimientos', FALSE);
 
 INSERT INTO estudiante_participa_proyecto (fk_estudiante_correo, fk_proyecto_nombre) VALUES
 ('estudiante1@estudiante.com', 'Mapa de Osa'),
