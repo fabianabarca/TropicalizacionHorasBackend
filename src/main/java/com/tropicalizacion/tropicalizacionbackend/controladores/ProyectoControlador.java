@@ -2,7 +2,6 @@ package com.tropicalizacion.tropicalizacionbackend.controladores;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.CustomResponse;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ProyectoEntidad;
-import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.ActividadDto;
 import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.EstudianteDto;
 import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.ProyectoDto;
 import com.tropicalizacion.tropicalizacionbackend.servicios.ProyectoServicio;
@@ -42,15 +41,16 @@ public class ProyectoControlador {
         return ResponseEntity.ok(new CustomResponse("","", proyectoDto));
     }
 
-    @GetMapping("/{nombre}/actividades")
+    /*@GetMapping("/{nombre}/actividades")
     public ResponseEntity<CustomResponse> obtenerActividadesProyecto(@PathVariable String nombre, @RequestParam Integer pagina, @RequestParam Integer limite) {
         Page<ActividadDto> actividades = this.proyectoServicio.actividadesProyecto(nombre, pagina, limite);
         return ResponseEntity.ok(new CustomResponse("", "", actividades));
-    }
+    }*/
 
     @GetMapping("/{nombre}/estudiantes")
     public ResponseEntity<CustomResponse> obtenerEstudiantesProyecto(@PathVariable String nombre, @RequestParam Integer pagina, @RequestParam Integer limite) {
-        Page<EstudianteDto> estudiantes = this.proyectoServicio.estudiantesProyecto(nombre, pagina, limite);
+        Page<EstudianteDto> estudiantes = this.proyectoServicio.estudiantesProyecto(nombre, pagina, limite)
+                .map(e -> this.modelMapper.map(e, EstudianteDto.class));
         return ResponseEntity.ok(new CustomResponse("", "", estudiantes));
     }
 

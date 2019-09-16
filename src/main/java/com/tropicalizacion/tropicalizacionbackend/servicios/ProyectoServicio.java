@@ -1,8 +1,7 @@
 package com.tropicalizacion.tropicalizacionbackend.servicios;
 
+import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ProyectoEntidad;
-import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.ActividadDto;
-import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.EstudianteDto;
 import org.springframework.data.domain.Page;
 
 public interface ProyectoServicio {
@@ -17,9 +16,7 @@ public interface ProyectoServicio {
 
     ProyectoEntidad consultarProyectoPorId(String id);
 
-    Page<ActividadDto> actividadesProyecto(String nombre, Integer pagina, Integer limite);
-
-    Page<EstudianteDto> estudiantesProyecto(String nombre, Integer pagina, Integer limite);
+    Page<EstudianteEntidad> estudiantesProyecto(String nombre, Integer pagina, Integer limite);
 
     void removerEstudiante(String proyecto, String estudiante);
 

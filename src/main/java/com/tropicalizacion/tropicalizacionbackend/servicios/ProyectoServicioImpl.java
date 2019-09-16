@@ -1,22 +1,26 @@
 package com.tropicalizacion.tropicalizacionbackend.servicios;
 
+import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ProyectoEntidad;
-import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.ActividadDto;
-import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.EstudianteDto;
+import com.tropicalizacion.tropicalizacionbackend.excepciones.ProyectoNoExisteExcepcion;
+import com.tropicalizacion.tropicalizacionbackend.repositorios.EstudiantesRepositorio;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.ProyectosRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 // TODO implementar
 @Service
 public class ProyectoServicioImpl implements ProyectoServicio {
     private ProyectosRepositorio proyectosRepositorio;
+    private EstudiantesRepositorio estudiantesRepositorio;
 
     @Autowired
-    public ProyectoServicioImpl(ProyectosRepositorio proyectosRepositorio) {
+    public ProyectoServicioImpl(ProyectosRepositorio proyectosRepositorio, EstudiantesRepositorio estudiantesRepositorio) {
         this.proyectosRepositorio = proyectosRepositorio;
+        this.estudiantesRepositorio = estudiantesRepositorio;
     }
 
     @Override
@@ -31,7 +35,10 @@ public class ProyectoServicioImpl implements ProyectoServicio {
 
     @Override
     public void modificarDescripcionProyecto(String nombre, String nuevaDescripcion) {
-
+        ProyectoEntidad proyecto = this.proyectosRepositorio.findById(nombre)
+                .orElseThrow(() -> new ProyectoNoExisteExcepcion("El proyecto " + nombre + "no existe", HttpStatus.NOT_FOUND, System.currentTimeMillis()));
+        proyecto.setDescripcion(nuevaDescripcion);
+        this.proyectosRepositorio.save(proyecto);
     }
 
     @Override
@@ -45,13 +52,8 @@ public class ProyectoServicioImpl implements ProyectoServicio {
     }
 
     @Override
-    public Page<ActividadDto> actividadesProyecto(String nombre, Integer pagina, Integer limite) {
-        return null;
-    }
-
-    @Override
-    public Page<EstudianteDto> estudiantesProyecto(String nombre, Integer pagina, Integer limite) {
-        return null;
+    public Page<EstudianteEntidad> estudiantesProyecto(String nombre, Integer pagina, Integer limite) {
+        return this.estudiantesRepositorio.estudiantesDeProyecto(nombre, PageRequest.of(pagina, limite));
     }
 
     @Override
