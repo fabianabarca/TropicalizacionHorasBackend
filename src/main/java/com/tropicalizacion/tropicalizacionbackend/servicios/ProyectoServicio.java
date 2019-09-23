@@ -21,4 +21,6 @@ public interface ProyectoServicio {
     void removerEstudiante(String proyecto, String estudiante);
 
     void agregarParticipante(String proyecto, String estudiante);
+
+    Page<EstudianteEntidad> estudiantesNoEnProyecto(String nombre, Integer pagina, Integer limite);
 }

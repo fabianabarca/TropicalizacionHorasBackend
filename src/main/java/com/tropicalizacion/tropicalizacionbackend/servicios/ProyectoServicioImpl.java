@@ -56,6 +56,12 @@ public class ProyectoServicioImpl implements ProyectoServicio {
         return this.estudiantesRepositorio.estudiantesDeProyecto(nombre, PageRequest.of(pagina, limite));
     }
 
+
+    @Override
+    public Page<EstudianteEntidad> estudiantesNoEnProyecto(String nombre, Integer pagina, Integer limite) {
+        return this.estudiantesRepositorio.estudiantesNoEnProyecto(nombre, PageRequest.of(pagina, limite));
+    }
+
     @Override
     public void removerEstudiante(String proyecto, String estudiante) {
 

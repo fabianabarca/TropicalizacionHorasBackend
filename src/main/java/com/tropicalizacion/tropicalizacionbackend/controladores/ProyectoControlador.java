@@ -54,6 +54,13 @@ public class ProyectoControlador {
         return ResponseEntity.ok(new CustomResponse("", "", estudiantes));
     }
 
+    @GetMapping("/{nombre}/no-estudiantes")
+    public ResponseEntity<CustomResponse> obtenerEstudiantesNoEnProyecto(@PathVariable String nombre, @RequestParam Integer pagina, @RequestParam Integer limite) {
+        Page<EstudianteDto> estudiantes = this.proyectoServicio.estudiantesNoEnProyecto(nombre, pagina, limite)
+                .map(e -> this.modelMapper.map(e, EstudianteDto.class));
+        return ResponseEntity.ok(new CustomResponse("", "", estudiantes));
+    }
+
     @GetMapping()
     public ResponseEntity<CustomResponse> obtenerProyectos(@RequestParam Integer pagina, @RequestParam Integer limite) {
         Page<ProyectoDto> proyectos = this.proyectoServicio.getProyectos(pagina, limite)
