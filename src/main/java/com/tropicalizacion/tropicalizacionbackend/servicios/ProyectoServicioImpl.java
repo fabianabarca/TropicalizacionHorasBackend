@@ -2,6 +2,7 @@ package com.tropicalizacion.tropicalizacionbackend.servicios;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ProyectoEntidad;
+import com.tropicalizacion.tropicalizacionbackend.excepciones.NoEncontradoExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.ProyectoNoExisteExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.EstudiantesRepositorio;
 import com.tropicalizacion.tropicalizacionbackend.repositorios.ProyectosRepositorio;
@@ -10,6 +11,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 // TODO implementar
 @Service
@@ -63,12 +68,26 @@ public class ProyectoServicioImpl implements ProyectoServicio {
     }
 
     @Override
-    public void removerEstudiante(String proyecto, String estudiante) {
+    public void removerEstudiante(String nombreProyecto, String correoEstudiante) {
+        ProyectoEntidad proyecto = this.proyectosRepositorio.findById(nombreProyecto).orElseThrow(() -> new ProyectoNoExisteExcepcion("El proyecto " + nombreProyecto + "no existe", HttpStatus.NOT_FOUND, System.currentTimeMillis()));
+        EstudianteEntidad estudiante = this.estudiantesRepositorio.findById(correoEstudiante).orElseThrow(() -> new NoEncontradoExcepcion("No existe estudiante con correo " + correoEstudiante, HttpStatus.NOT_FOUND, System.currentTimeMillis()));
 
+        proyecto.getEstudiantes().removeIf(estudianteP -> estudianteP.getCorreoUsuario().equals(correoEstudiante));
+        estudiante.getProyectos().removeIf(proyectoE -> proyectoE.getNombre().equals(nombreProyecto));
+
+        this.proyectosRepositorio.save(proyecto);
     }
 
     @Override
-    public void agregarParticipante(String proyecto, String estudiante) {
+    public void agregarParticipante(String nombreProyecto, String[] correosEstudiantes) {
+        ProyectoEntidad proyecto = this.proyectosRepositorio.findById(nombreProyecto).orElseThrow(() -> new ProyectoNoExisteExcepcion("El proyecto " + nombreProyecto + "no existe", HttpStatus.NOT_FOUND, System.currentTimeMillis()));
+        List<EstudianteEntidad> estudiantes = Arrays.stream(correosEstudiantes)
+                .map(correo -> estudiantesRepositorio.findById(correo).orElseThrow(() -> new NoEncontradoExcepcion("No existe estudiante con correo " + correo, HttpStatus.NOT_FOUND, System.currentTimeMillis())))
+                .collect(Collectors.toList());
 
+        estudiantes.forEach(estudianteEntidad -> estudianteEntidad.getProyectos().add(proyecto));
+        proyecto.getEstudiantes().addAll(estudiantes);
+
+        this.proyectosRepositorio.save(proyecto);
     }
 }

@@ -81,7 +81,7 @@ public class ProyectoControlador {
         return ResponseEntity.ok(new CustomResponse(""));
     }
 
-    @DeleteMapping("/{proyecto}/participa/{estudiante}")
+    @DeleteMapping("/{proyecto}/asignar-estudiantes/{estudiante}")
     public ResponseEntity<CustomResponse> borrarParticipa(@PathVariable String proyecto, @PathVariable String estudiante) {
         this.proyectoServicio.removerEstudiante(proyecto, estudiante);
         return ResponseEntity.ok(new CustomResponse(""));
@@ -93,9 +93,9 @@ public class ProyectoControlador {
         return ResponseEntity.ok(new CustomResponse(""));
     }
 
-    @PutMapping("/{proyecto}/participa/{estudiante}")
-    public ResponseEntity<CustomResponse> asignarParticipa(@PathVariable String proyecto, @PathVariable String estudiante) {
-        this.proyectoServicio.agregarParticipante(proyecto, estudiante);
+    @PutMapping("/{proyecto}/asignar-estudiantes")
+    public ResponseEntity<CustomResponse> asignarParticipa(@PathVariable String proyecto, @RequestBody String[] correosEstudiantes) {
+        this.proyectoServicio.agregarParticipante(proyecto, correosEstudiantes);
         return ResponseEntity.ok(new CustomResponse(""));
     }
 }
