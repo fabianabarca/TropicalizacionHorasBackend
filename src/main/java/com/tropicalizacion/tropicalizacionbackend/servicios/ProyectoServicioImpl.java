@@ -53,7 +53,7 @@ public class ProyectoServicioImpl implements ProyectoServicio {
 
     @Override
     public ProyectoEntidad consultarProyectoPorId(String id) {
-        return null;
+        return this.proyectosRepositorio.findById(id).orElseThrow(() -> new ProyectoNoExisteExcepcion("El proyecto " + id + "no existe", HttpStatus.NOT_FOUND, System.currentTimeMillis()));
     }
 
     @Override
