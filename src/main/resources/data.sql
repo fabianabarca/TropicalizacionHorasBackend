@@ -1,25 +1,23 @@
 -- Todas las contraseñas son "contrasenna"
 INSERT INTO usuario (pk_correo, apellidos, contrasenna, nombre, telefono, borrado, activado) VALUES
-('estudiante1@estudiante.com', 'Araya Jimémenez', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Juan', '88888888', TRUE, TRUE),
-('estudiante2@estudiante.com', 'Zuñiga Barrantes', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Arturo', '88888888', TRUE, TRUE),
-('estudiante3@estudiante.com', 'Castro Fallas', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'David', '88888888', TRUE, TRUE),
-('estudiante4@estudiante.com', 'Hidalgo López', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Francisco', '88888888', TRUE, FALSE),
-('teo@revisor.com', 'Willink', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Teodoro', '88888888', TRUE, TRUE),
-('mariam@revisor.com', 'Mejías', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Mariam', '88888888', TRUE, TRUE),
-('fabian@coordinador.com', 'Fabian', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Meléndez', '88888888', TRUE, TRUE),
-('josed1608@gmail.com', 'Jose David', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Vargas', '88888888', TRUE, TRUE);
+('estudiante1@estudiante.com', 'Araya Jimémenez', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Juan', '88888888', FALSE, TRUE),
+('estudiante2@estudiante.com', 'Zuñiga Barrantes', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Arturo', '88888888', FALSE, TRUE),
+('estudiante3@estudiante.com', 'Castro Fallas', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'David', '88888888', FALSE, TRUE),
+('estudiante4@estudiante.com', 'Hidalgo López', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Francisco', '88888888', FALSE, FALSE),
+('teo@revisor.com', 'Willink Apellido', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Teodoro', '88888888', FALSE, TRUE),
+('mariam@revisor.com', 'Mejías Apellido', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Mariam', '88888888', FALSE, TRUE),
+('fabian@coordinador.com', 'Meléndez Apellido', '$2a$10$tsqRGNas84QPuzIWfRFeeug4SR2PdnuZpkLHqPsiQc7DiPfGRQWpi', 'Fabián', '88888888', FALSE, TRUE);
 
-INSERT INTO estudiante (pk_correo_usuario, carne, estado, fecha_final, fecha_inicio, horas_totales, tipo) VALUES
-('estudiante1@estudiante.com', 'B64895', 'Activo', '2020-05-20', '2019-05-20', 4, 'Regular'),
-('estudiante2@estudiante.com', 'B47512', 'Activo', '2020-05-20', '2019-05-20', 2, 'Regular'),
-('estudiante3@estudiante.com', 'B02541', 'Activo', '2020-05-20', '2019-05-20', 1, 'Regular'),
-('estudiante4@estudiante.com', 'A94512', 'Activo', '2020-05-20', '2019-05-20', 30, 'Regular'),
-('josed1608@gmail.com', 'B67437', 'Activo', '2020-05-20', '2019-05-20', 30, 'Regular');
+INSERT INTO estudiante (pk_correo_usuario, carne, estado, fecha_final, fecha_inicio, horas_totales, tipo, borrado) VALUES
+('estudiante1@estudiante.com', 'B64895', 'Activo', '2020-05-20', '2019-05-20', 4, 'Regular', FALSE),
+('estudiante2@estudiante.com', 'B47512', 'Activo', '2020-05-20', '2019-05-20', 2, 'Regular', FALSE),
+('estudiante3@estudiante.com', 'B02541', 'Activo', '2020-05-20', '2019-05-20', 1, 'Regular', FALSE),
+('estudiante4@estudiante.com', 'A94512', 'Activo', '2020-05-20', '2019-05-20', 30, 'Regular', FALSE);
 
-INSERT INTO revisor (pk_correo_usuario, es_coordinador) VALUES
-('teo@revisor.com', false),
-('mariam@revisor.com', false),
-('fabian@coordinador.com', true);
+INSERT INTO revisor (pk_correo_usuario, es_coordinador, borrado) VALUES
+('teo@revisor.com', FALSE, FALSE),
+('mariam@revisor.com', FALSE, FALSE),
+('fabian@coordinador.com', TRUE, FALSE);
 
 INSERT INTO categoria (pk_nombre, borrado) VALUES
 ('Reunión', FALSE),
@@ -40,8 +38,7 @@ INSERT INTO estudiante_participa_proyecto (fk_estudiante_correo, fk_proyecto_nom
 ('estudiante2@estudiante.com', 'Ingreso a la U'),
 ('estudiante3@estudiante.com', 'Factura electrónica'),
 ('estudiante3@estudiante.com', 'RRSS'),
-('estudiante4@estudiante.com', 'RRSS'),
-('josed1608@gmail.com', 'RRSS');
+('estudiante4@estudiante.com', 'RRSS');
 
 INSERT INTO actividad (fk_correo_estudiante, id_generado, detalles, estado, fecha, horas, justificacion_rechazo, fk_nombre_categoria, fk_nombre_proyecto, fk_correo_revisor) VALUES
 ('estudiante1@estudiante.com', 1, 'Desarrollar aplicación', 'Pendiente', '2019-07-12', 4, null, 'Trabajo', 'Mapa de Osa', null),

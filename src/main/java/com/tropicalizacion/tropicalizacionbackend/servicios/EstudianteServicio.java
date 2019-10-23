@@ -1,9 +1,7 @@
 package com.tropicalizacion.tropicalizacionbackend.servicios;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad;
-import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.EstudianteDto;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 public interface EstudianteServicio {
 
@@ -11,9 +9,11 @@ public interface EstudianteServicio {
 
     void borrarEstudiante(EstudianteEntidad estudianteEntidad);
 
-    void modificarEstudiante(EstudianteEntidad estudianteEntidad);
-
     Page<EstudianteEntidad> getEstudiantes(Integer pagina, Integer limite);
 
     EstudianteEntidad consultarEstudiantePorId(String id);
+
+    void editarProyectos(EstudianteEntidad estudianteEntidad, String[] proyectos);
+
+    void editarEstudiante(EstudianteEntidad estudianteEntidad, EstudianteEntidad nuevoEstudiante);
 }

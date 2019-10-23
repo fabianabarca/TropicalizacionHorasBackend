@@ -6,19 +6,19 @@ import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.EstudianteDto;
 import com.tropicalizacion.tropicalizacionbackend.servicios.EstudianteServicio;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin
 @RequestMapping(value = "/estudiante")
@@ -44,9 +44,8 @@ public class EstudianteControlador {
             @RequestParam Integer pagina,
             @RequestParam Integer limite
     ){
-        List<EstudianteDto> EstudiantesNombre =  estudianteServicio.getEstudiantes(pagina, limite).stream()
-                .map(estudiante -> modelMapper.map(estudiante, EstudianteDto.class))
-                .collect(Collectors.toList());
+        Page<EstudianteDto> EstudiantesNombre =  estudianteServicio.getEstudiantes(pagina, limite)
+                .map(e -> this.modelMapper.map(e, EstudianteDto.class));
         return new ResponseEntity<>(new CustomResponse(EstudiantesNombre), HttpStatus.OK);
     }
 
@@ -56,4 +55,24 @@ public class EstudianteControlador {
         return new ResponseEntity<>(new CustomResponse(modelMapper.map(EstudianteEntidad, EstudianteDto.class)), HttpStatus.OK);
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<CustomResponse> editarEstudiante(@PathVariable String id, @RequestBody EstudianteEntidad nuevoEstudiante) {
+        EstudianteEntidad estudianteEntidad = this.estudianteServicio.consultarEstudiantePorId(id);
+        this.estudianteServicio.editarEstudiante(estudianteEntidad, nuevoEstudiante);
+        return new ResponseEntity<>(new CustomResponse(HttpStatus.OK), HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/proyectos/{email}")
+    public ResponseEntity<CustomResponse> editarProyectos(@PathVariable String email, @RequestBody String[] proyectos) {
+        EstudianteEntidad estudianteEntidad = this.estudianteServicio.consultarEstudiantePorId(email);
+        this.estudianteServicio.editarProyectos(estudianteEntidad, proyectos);
+        return new ResponseEntity<>(new CustomResponse(HttpStatus.OK), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "{email}")
+    public ResponseEntity<CustomResponse> borrarEstudiante(@PathVariable String email) {
+        EstudianteEntidad estudianteEntidad = this.estudianteServicio.consultarEstudiantePorId(email);
+        this.estudianteServicio.borrarEstudiante(estudianteEntidad);
+        return new ResponseEntity<>(new CustomResponse(HttpStatus.OK), HttpStatus.OK);
+    }
 }

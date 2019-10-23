@@ -7,9 +7,9 @@ public interface RevisorServicio {
 
     void agregarRevisor(RevisorEntidad revisorEntidad);
 
-    void borrarRevisor(RevisorEntidad revisorEntidad);
+    void borrarRevisor(String correoRevisor);
 
-    void modificarRevisor(RevisorEntidad revisorEntidad);
+    void modificarRevisor(RevisorEntidad nuevoRevisor);
 
     Page<RevisorEntidad> getRevisores(Integer pagina, Integer limite);
 

@@ -2,7 +2,13 @@ package com.tropicalizacion.tropicalizacionbackend.controladores;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.CustomResponse;
 import com.tropicalizacion.tropicalizacionbackend.entidades.RevisionModelo;
+import com.tropicalizacion.tropicalizacionbackend.entidades.bd.RevisorEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.dtos.RevisorDto;
+import com.tropicalizacion.tropicalizacionbackend.servicios.RevisorServicio;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 // TODO: implementar
@@ -20,36 +27,38 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class RevisorControlador {
 
-    @GetMapping("/pendientes")
-    public ResponseEntity<CustomResponse> obtenerActividadesPendientes() {
+    private RevisorServicio revisorServicio;
+    private ModelMapper modelMapper;
 
-        return null;
+    @Autowired
+    public RevisorControlador(RevisorServicio revisorServicio, ModelMapper modelMapper) {
+        this.revisorServicio = revisorServicio;
+        this.modelMapper = modelMapper;
     }
 
     // Devuelve también coordinadores
     @GetMapping()
-    public ResponseEntity<CustomResponse> obtenerRevisores(){
-        return null;
+    public ResponseEntity<CustomResponse> obtenerRevisores(@RequestParam Integer pagina, @RequestParam Integer limite){
+        Page<RevisorDto> revisores = this.revisorServicio.getRevisores(pagina, limite).map(r -> this.modelMapper.map(r, RevisorDto.class));
+        return new ResponseEntity<>(new CustomResponse(revisores), HttpStatus.OK);
     }
 
     @PostMapping()
     public ResponseEntity<CustomResponse> crearRevisor(@RequestBody RevisorDto revisor) {
-        return null;
-    }
-
-    @PostMapping("/coordinador")
-    public ResponseEntity<CustomResponse> crearCoordinador(@RequestBody RevisorDto coordinador) {
-        return null;
+        this.revisorServicio.agregarRevisor(this.modelMapper.map(revisor, RevisorEntidad.class));
+        return new ResponseEntity<>(new CustomResponse(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{correo}")
     public  ResponseEntity<CustomResponse> borrarRevisor(@PathVariable String correo) {
-        return null;
+        this.revisorServicio.borrarRevisor(correo);
+        return new ResponseEntity<>(new CustomResponse(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/coordinador/{correo}")
-    public  ResponseEntity<CustomResponse> borrarCoordinador(@PathVariable String correo) {
-        return null;
+    @PutMapping("/{correo}")
+    public ResponseEntity<CustomResponse> modificarRevisor(@PathVariable String correo, @RequestBody RevisorDto revisor) {
+        this.revisorServicio.modificarRevisor(this.modelMapper.map(revisor, RevisorEntidad.class));
+        return new ResponseEntity<>(new CustomResponse(), HttpStatus.OK);
     }
 
     @PutMapping("/revisar/{actividadId}")

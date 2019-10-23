@@ -5,6 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Loader;
+import org.hibernate.annotations.NamedQuery;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +21,18 @@ import java.util.Set;
 
 @Entity
 @Table(name = "proyecto")
+@SQLDelete(sql =
+        "UPDATE ProyectoEntidad " +
+                "SET borrado = true " +
+                "WHERE id = ?")
+@Loader(namedQuery = "findProyectoById")
+@NamedQuery(name = "findProyectoById", query =
+        "SELECT p " +
+                "FROM ProyectoEntidad p " +
+                "WHERE " +
+                " p.nombre = ?1 AND " +
+                " p.borrado = false")
+@Where(clause = "borrado = false")
 @Setter @Getter @Builder @AllArgsConstructor @NoArgsConstructor
 public class ProyectoEntidad {
     @Id

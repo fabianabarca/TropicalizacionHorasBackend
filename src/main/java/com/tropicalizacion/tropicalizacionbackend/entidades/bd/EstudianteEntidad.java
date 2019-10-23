@@ -5,6 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Loader;
+import org.hibernate.annotations.NamedQuery;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +27,18 @@ import java.util.Set;
 
 @Entity
 @Table(name = "estudiante")
+@SQLDelete(sql =
+        "UPDATE EstudianteEntidad " +
+                "SET borrado = true " +
+                "WHERE id = ?")
+@Loader(namedQuery = "findEstudianteById")
+@NamedQuery(name = "findEstudianteById", query =
+        "SELECT e " +
+                "FROM EstudianteEntidad e " +
+                "WHERE " +
+                " e.correoUsuario= ?1 AND " +
+                " e.borrado = false")
+@Where(clause = "borrado = false")
 @Setter @Getter @Builder @NoArgsConstructor @AllArgsConstructor
 public class EstudianteEntidad {
 
@@ -52,6 +68,9 @@ public class EstudianteEntidad {
     @Column(name = "horas_totales")
     @NotNull
     private int horasTotales;
+
+    @Column(name = "borrado")
+    private boolean borrado;
 
     @OneToOne
     @MapsId
