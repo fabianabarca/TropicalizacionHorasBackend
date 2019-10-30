@@ -65,7 +65,6 @@ public class ActividadEntidad {
         this.fecha = actividadEntidad.fecha;
         this.horas = actividadEntidad.horas;
         this.estado = actividadEntidad.estado;
-        this.estudiante = actividadEntidad.estudiante;
         this.justificacionRechazo = actividadEntidad.justificacionRechazo;
     }
 }

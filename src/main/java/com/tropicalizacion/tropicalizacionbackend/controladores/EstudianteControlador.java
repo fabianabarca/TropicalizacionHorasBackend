@@ -55,6 +55,12 @@ public class EstudianteControlador {
         return new ResponseEntity<>(new CustomResponse(modelMapper.map(EstudianteEntidad, EstudianteDto.class)), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/{correo}/horas-pendientes")
+    public ResponseEntity<CustomResponse> getHorasPendientes(@PathVariable String correo) {
+        int horasPendientes = estudianteServicio.getHorasPendientes(correo);
+        return new ResponseEntity<>(new CustomResponse(horasPendientes), HttpStatus.OK);
+    }
+
     @PutMapping(value = "/{id}")
     public ResponseEntity<CustomResponse> editarEstudiante(@PathVariable String id, @RequestBody EstudianteEntidad nuevoEstudiante) {
         EstudianteEntidad estudianteEntidad = this.estudianteServicio.consultarEstudiantePorId(id);

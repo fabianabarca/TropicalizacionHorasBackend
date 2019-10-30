@@ -25,9 +25,9 @@ INSERT INTO categoria (pk_nombre, borrado) VALUES
 ('Gira', FALSE);
 
 INSERT INTO proyecto (pk_nombre, descripcion, borrado) VALUES
-('Mapa de Osa', 'ProyectoEntidad para desarollar la aplicación del mapa de Osa', FALSE),
-('Ingreso a la U', 'ProyectoEntidad encargado de divulgar información sobre la UCR a comunidades de Osa', FALSE),
-('Factura electrónica', 'ProyectoEntidad encargado de informar a la comunidades de Osa sobre la factura electrónica', FALSE),
+('Mapa de Osa', 'Desarollar la aplicación del mapa de Osa', FALSE),
+('Ingreso a la U', 'Encargado de divulgar información sobre la UCR a comunidades de Osa', FALSE),
+('Factura electrónica', 'Encargado de informar a la comunidades de Osa sobre la factura electrónica', FALSE),
 ('RRSS', 'Talleres de redes sociales para las comunidades y emprendimientos', FALSE);
 
 INSERT INTO estudiante_participa_proyecto (fk_estudiante_correo, fk_proyecto_nombre) VALUES
@@ -42,7 +42,6 @@ INSERT INTO estudiante_participa_proyecto (fk_estudiante_correo, fk_proyecto_nom
 
 INSERT INTO actividad (fk_correo_estudiante, id_generado, detalles, estado, fecha, horas, justificacion_rechazo, fk_nombre_categoria, fk_nombre_proyecto, fk_correo_revisor) VALUES
 ('estudiante1@estudiante.com', 1, 'Desarrollar aplicación', 'Pendiente', '2019-07-12', 4, null, 'Trabajo', 'Mapa de Osa', null),
-('estudiante1@estudiante.com', 2, 'Desarrollar aplicación', 'Aprobada', '2019-07-13', 3, null, 'Trabajo', 'Mapa de Osa', null),
 ('estudiante1@estudiante.com', 3, 'Desarrollar aplicación', 'Pendiente', '2019-06-14', 8, null, 'Trabajo', 'Mapa de Osa', null),
 ('estudiante1@estudiante.com', 4, 'Desarrollar aplicación', 'Pendiente', '2019-07-15', 10, null, 'Trabajo', 'Mapa de Osa', null),
 ('estudiante1@estudiante.com', 5, 'Desarrollar aplicación', 'Pendiente', '2019-05-15', 10, null, 'Trabajo', 'Mapa de Osa', null),

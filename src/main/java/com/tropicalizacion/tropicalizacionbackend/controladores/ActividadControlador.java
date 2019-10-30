@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -64,6 +65,16 @@ public class ActividadControlador {
     }
 
     @GetMapping
+    public ResponseEntity<CustomResponse> consultarActividades(@RequestParam(value="aceptadas") boolean aceptadas,
+                                                               @RequestParam(value = "pendientes") boolean pendientes,
+                                                               @RequestParam(value = "rechazadas") boolean rechazadas) {
+        List<ActividadDto> actividades = this.actividadServicio.getActividades(aceptadas, pendientes, rechazadas).stream()
+            .map(a -> this.modelMapper.map(a, ActividadDto.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(new CustomResponse(actividades), HttpStatus.OK);
+    }
+
+    @GetMapping("/estudiante")
     public ResponseEntity<CustomResponse> consultarActividadesPorEstudiante(
             @RequestParam(value="correo", required=false) String correo){
         ArrayList<ActividadEntidad> actividadEntidadPage = actividadServicio.consultarActividadPorEstudiante(correo);
@@ -88,14 +99,13 @@ public class ActividadControlador {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomResponse> modificarActividad(@PathVariable Integer id, @RequestBody ActividadDto actividadDto) {
-        try {
-            final ActividadEntidad actividadEntidad = modelMapper.map(actividadDto, ActividadEntidad.class);
-            actividadServicio.modificarActividad(id, actividadEntidad);
-            return new ResponseEntity<>(new CustomResponse(""), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<CustomResponse> modificarActividad(@PathVariable Integer id, @RequestBody ActividadDto actividadDto, Principal principal) {
+        if (principal == null) {
+            return new ResponseEntity<>(new CustomResponse("No hay usuario autenticado"), HttpStatus.UNAUTHORIZED);
         }
+        final ActividadEntidad actividadEntidad = modelMapper.map(actividadDto, ActividadEntidad.class);
+        actividadServicio.modificarActividad(id, actividadEntidad, principal.getName());
+        return new ResponseEntity<>(new CustomResponse(""), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

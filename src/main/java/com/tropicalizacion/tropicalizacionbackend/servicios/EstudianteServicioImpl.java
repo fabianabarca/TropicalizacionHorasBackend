@@ -1,8 +1,10 @@
 package com.tropicalizacion.tropicalizacionbackend.servicios;
 
+import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ActividadEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.EstudianteEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ProyectoEntidad;
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.UsuarioEntidad;
+import com.tropicalizacion.tropicalizacionbackend.excepciones.NoEncontradoExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.ProyectoNoExisteExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.UsuarioNoEncontradoExcepcion;
 import com.tropicalizacion.tropicalizacionbackend.excepciones.UsuarioYaExisteExcepcion;
@@ -118,5 +120,15 @@ public class EstudianteServicioImpl implements EstudianteServicio {
         estudianteEntidad.setFechaFinal(nuevoEstudiante.getFechaFinal());
 
         this.estudiantesRepositorio.save(estudianteEntidad);
+    }
+
+    @Override
+    public int getHorasPendientes(String correo) {
+        EstudianteEntidad e = this.estudiantesRepositorio.findById(correo).orElseThrow(() -> new NoEncontradoExcepcion("No está el estudiante " + correo, HttpStatus.NOT_FOUND, System.currentTimeMillis()));
+        return e.getActividades().stream()
+                .filter(a -> a.getEstado().equals("Pendiente"))
+                .map(ActividadEntidad::getHoras)
+                .reduce(Integer::sum)
+                .orElse(0);
     }
 }

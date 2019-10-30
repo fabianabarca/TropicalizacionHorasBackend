@@ -16,4 +16,6 @@ public interface EstudianteServicio {
     void editarProyectos(EstudianteEntidad estudianteEntidad, String[] proyectos);
 
     void editarEstudiante(EstudianteEntidad estudianteEntidad, EstudianteEntidad nuevoEstudiante);
+
+    int getHorasPendientes(String correo);
 }

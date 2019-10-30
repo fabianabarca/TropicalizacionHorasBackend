@@ -1,9 +1,9 @@
 package com.tropicalizacion.tropicalizacionbackend.servicios;
 
 import com.tropicalizacion.tropicalizacionbackend.entidades.bd.ActividadEntidad;
-import org.springframework.data.domain.Page;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public interface ActividadServicio {
@@ -12,9 +12,9 @@ public interface ActividadServicio {
 
     void borrarActividad(Integer id);
 
-    void modificarActividad(Integer id, ActividadEntidad actividadEntidad);
+    void modificarActividad(Integer id, ActividadEntidad actividadEntidad, String userEmail);
 
-    Page<ActividadEntidad> getActividades(Integer pagina, Integer limite);
+    public List<ActividadEntidad> getActividades(boolean aceptadas, boolean pendientes, boolean rechazadas);
 
     ArrayList<ActividadEntidad> consultarActividadPorEstudiante(String correoEstudiante);
 
